@@ -28,7 +28,7 @@ public class Player : MonoBehaviour
     protected NavMeshAgent MeshAgent;
 
     public static Transform KillerTransform;
-    public static bool StabReady;
+    public bool StabReady;
 
     AudioClip StabFX;
     AudioClip InteractFX;
@@ -49,7 +49,7 @@ public class Player : MonoBehaviour
         ParticleSystem = GetComponent<ParticleSystem>();
         MeshAgent = GetComponent<NavMeshAgent>();
         SpriteTransform.eulerAngles = new Vector3(0, 180, 0);
-        Player.StabReady = true;
+        StabReady = true;
 
         AudioSource = gameObject.AddComponent<AudioSource>();
         StabFX = Resources.Load<AudioClip>("SFX/Knife");

@@ -9,6 +9,7 @@ public class Vent : MonoBehaviour
     public List<Vent> Vents;
     Transform ArrowParent;
     public float ZAngle;
+    public Animator Animator;
     // Start is called before the first frame update
     void Start()
     {
@@ -31,6 +32,7 @@ public class Vent : MonoBehaviour
 
         }
         ToggleArrows(false);
+        Animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
