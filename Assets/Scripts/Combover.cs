@@ -113,18 +113,21 @@ public class Combover : Player
             {
                 GameManager.AudioSource.PlayOneShot(VentFX);
                 Vent = hit.collider.GetComponent<Vent>();
+                MeshAgent.Warp(Vent.transform.position + new Vector3(0, 1, 0));
                 IsVenting = true;
                 MovementVector = Vector2.zero;
                 Animator.SetBool("Walking", false);
                 Sprite.SetActive(false);
                 BoxCollider.enabled = false;
                 Vent.ToggleArrows(true);
+                Vent.Animator.SetTrigger("Open");
             }
         }
         else if (!panning && IsVenting)
         {
             GameManager.AudioSource.PlayOneShot(VentFX);
             Vent.ToggleArrows(false);
+            Vent.Animator.SetTrigger("Open");
             Vent = null;
             Sprite.SetActive(true);
             BoxCollider.enabled = true;

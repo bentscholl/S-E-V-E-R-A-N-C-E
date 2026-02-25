@@ -195,6 +195,7 @@ MonoBehaviour:
   Swapping: 0
   SwapOnCooldown: 0
   IsKiller: 0
+  StabReady: 0
   IsVenting: 0
   Sprite: {fileID: 0}
 --- !u!195 &8094047402423988276
@@ -218,7 +219,7 @@ NavMeshAgent:
   m_Height: 2
   m_BaseOffset: 0.3
   m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
+  m_ObstacleAvoidanceType: 0
 --- !u!95 &76548674414559205
 Animator:
   serializedVersion: 5

@@ -6,6 +6,7 @@ using Unity.Mathematics;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.U2D;
 using Random = UnityEngine.Random;
 public class NPC : MonoBehaviour
 {
@@ -13,10 +14,14 @@ public class NPC : MonoBehaviour
 
     SpriteRenderer Sprite;
     Transform SpriteTransform;
+    [HideInInspector]
     public bool FlipRight;
     Animator Animator;
+    Sprite[] Sprites;
+    public int SpriteIndex;
 
     bool IsDead;
+    [HideInInspector]
     public bool IsRelocated;
     SphereCollider DeathCall;
     SphereCollider CorpseRadius;
@@ -34,7 +39,7 @@ public class NPC : MonoBehaviour
     private GameObject SuspiciousBrow;
     private GameObject ScaredBrow;
 
-    public float Suspicion;
+    private bool sawKiller;
     private bool Despawnable; //Added to fix the fact that setting agent destination is async, sometimes prematurely escaping
     Vector3 Escape;
     Room[] Rooms;
@@ -45,7 +50,9 @@ public class NPC : MonoBehaviour
 
     public static int NPCsEscaped;
     public static int NPCsKilled;
-
+    [Header("Stats")]
+    [SerializeField]
+    private float Suspicion;
     [SerializeField]
     private float Patience;
     [SerializeField]
@@ -54,6 +61,8 @@ public class NPC : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        SpriteAtlas Atlas = (SpriteAtlas)Resources.Load("SpriteAtlas/NPC" + Random.Range(1, 3));
+        Atlas.GetSprites(Sprites);
         Agent = GetComponent<NavMeshAgent>();
         Behavior = FiniteState.Idle;
         Animator = GetComponent<Animator>();
@@ -109,6 +118,7 @@ public class NPC : MonoBehaviour
                 Behavior = FiniteState.Escape;
                 SuspiciousBrow.SetActive(false);
                 ScaredBrow.SetActive(true);
+                Animator.SetTrigger("Run");
                 Agent.speed *= 2f;
             }
 
@@ -179,29 +189,43 @@ public class NPC : MonoBehaviour
             }
 
             SpriteParent.LookAt(SpriteParent.position - new Vector3(0, 0, -1));
+
             if (Agent.desiredVelocity.x > 0)
             {
-                SpriteParent.eulerAngles = new Vector3(0, 180, 0);
+                FlipRight = true;
             }
             else if (Agent.desiredVelocity.x < 0)
             {
+                FlipRight = false;
+            }
+
+            if (FlipRight)
+            {
+                SpriteParent.eulerAngles = new Vector3(0, 180, 0);
+            }
+            else
+            {
                 SpriteParent.eulerAngles = Vector3.zero;
             }
+
             Brows.localPosition = new Vector3(0, 0, -Brows.forward.z * .01f);
 
             if (Player.KillerTransform != null)
             {
                 float DistanceMeathead = Vector3.Distance(transform.position,Meathead.Instance.transform.position);
                 float DistanceCombover = Vector3.Distance(transform.position, Combover.Instance.transform.position);
-
-                if (DistanceMeathead < 4.5f || DistanceCombover < 4.5f)
+                sawKiller = false;
+                if (DistanceMeathead < 4.5f)
                 {
                     CheckSurroundings(Meathead.Instance.transform.position);
+                }
+                if (DistanceCombover < 4.5f)
+                {
                     CheckSurroundings(Combover.Instance.transform.position);
                 }
-                else if (Suspicion < 100 && Suspicion > 0)
+                if (!sawKiller)
                 {
-                    //Suspicion -= .5f;
+                    Suspicion -= .5f;
                     if (Suspicion < 0)
                     { Suspicion = 0; }
                 }
@@ -215,7 +239,8 @@ public class NPC : MonoBehaviour
         Vector3 PlayerDir = position - transform.position;
         Physics.Raycast(transform.position, PlayerDir, out hit, 4, KillerSpotting);
         Player player;
-        if (hit.collider != null)
+        bool seesPlayer = PlayerDir.x <= 0 && !FlipRight || PlayerDir.x >= 0 && FlipRight;
+        if (hit.collider != null && seesPlayer)
         {
             //print(hit.collider.name);
             hit.collider.TryGetComponent<Player>(out player);
@@ -224,6 +249,7 @@ public class NPC : MonoBehaviour
                 if (player.IsKiller && Suspicion < 100)
                 {
                     Suspicion += (4.5f - Vector3.Distance(transform.position, position))*2/5;
+                    sawKiller = true;
                     if(Suspicion >= 100)
                     {
                         GameManager.Money -= 10000;
@@ -303,12 +329,15 @@ public class NPC : MonoBehaviour
         {
             RaycastHit hit;
             Vector3 Direction = other.transform.position - transform.position;
-            Physics.Raycast(transform.position, Direction, out hit, 4, BodySpotting);
-            Debug.DrawLine(transform.position, hit.point, Color.red, 7);
-            if (hit.collider && hit.collider.gameObject.layer == LayerMask.NameToLayer("Dead"))
+            bool seesBody = Direction.x <= 0 && !FlipRight || Direction.x >= 0 && FlipRight;
+            if (seesBody)
             {
-                Suspicion = 100;
-                GameManager.Money -= 10000;
+                Physics.Raycast(transform.position, Direction, out hit, 4, BodySpotting);
+                if (hit.collider && hit.collider.gameObject.layer == LayerMask.NameToLayer("Dead"))
+                {
+                    Suspicion = 100;
+                    GameManager.Money -= 10000;
+                }
             }
         }
     }

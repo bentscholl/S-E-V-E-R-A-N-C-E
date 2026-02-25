@@ -280,6 +280,7 @@ MonoBehaviour:
   Swapping: 0
   SwapOnCooldown: 0
   IsKiller: 0
+  StabReady: 0
 --- !u!195 &3183506155082161892
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -301,7 +302,7 @@ NavMeshAgent:
   m_Height: 2
   m_BaseOffset: 0.3
   m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
+  m_ObstacleAvoidanceType: 0
 --- !u!95 &1684359323776728611
 Animator:
   serializedVersion: 5
@@ -5212,7 +5213,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 255
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
