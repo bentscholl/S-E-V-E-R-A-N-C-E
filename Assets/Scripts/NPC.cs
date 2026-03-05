@@ -51,6 +51,7 @@ public class NPC : MonoBehaviour
     public static int NPCsEscaped;
     public static int NPCsKilled;
     [Header("Stats")]
+
     [SerializeField]
     private float Suspicion;
     [SerializeField]
@@ -61,8 +62,10 @@ public class NPC : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Sprites = Resources.LoadAll<Sprite>("NPCSprites/NPC" + Random.Range(1, 3));
-        SpriteRenderer = transform.GetChild(0).GetChild(1).GetComponent<SpriteRenderer>();
+        //SpriteAtlas Atlas = (SpriteAtlas)Resources.Load("SpriteAtlas/NPC" + Random.Range(1, 3));
+        //Atlas.GetSprites(Sprites);
+        Sprites = Resources.LoadAll<Sprite>("NPCs/NPC"+Random.Range(1,8));
+        Sprite = transform.GetChild(0).GetChild(1).GetComponent<SpriteRenderer>();
         Agent = GetComponent<NavMeshAgent>();
         Behavior = FiniteState.Idle;
         Animator = GetComponent<Animator>();
@@ -74,7 +77,7 @@ public class NPC : MonoBehaviour
 
         Rooms = GameObject.Find("Locales").GetComponentsInChildren<Room>();
         MyRoom = Rooms[Random.Range(0,Rooms.Length)];
-        Bathroom = GameObject.Find("Bathroom").GetComponent<Room>();
+        //Bathroom = GameObject.Find("Bathroom").GetComponent<Room>();
 
         while(MyRoom.Residents >= MyRoom.Capacity)
         {
@@ -92,8 +95,6 @@ public class NPC : MonoBehaviour
         Brows = SpriteParent.transform.GetChild(0);
         SuspiciousBrow = Brows.GetChild(0).gameObject;
         ScaredBrow = Brows.GetChild(1).gameObject;
-
-        
         SuspiciousBrow.SetActive(false);
         ScaredBrow.SetActive(false);
     }
@@ -150,9 +151,10 @@ public class NPC : MonoBehaviour
                         Agent.SetDestination(location);
                         Boredom = 0;
                         Behavior = FiniteState.Travel;
-                    }
+                    }/*
                     else
                     {
+
                         if (i == 1 && Bathroom.Residents == 0)
                         {
                             MyRoom.Residents--;
@@ -161,7 +163,7 @@ public class NPC : MonoBehaviour
                             Vector3 location = MyRoom.transform.position + new Vector3(Random.Range(-MyRoom.XVariation, MyRoom.XVariation), 0, Random.Range(-MyRoom.ZVariation, MyRoom.ZVariation + 1));
                             Agent.SetDestination(location);
                             Boredom = 0;
-                        }
+                        }*/
                         else
                         {
                             Vector3 location = MyRoom.transform.position + new Vector3(Random.Range(-MyRoom.XVariation, MyRoom.XVariation), 0, Random.Range(-MyRoom.ZVariation, MyRoom.ZVariation + 1));
@@ -169,7 +171,7 @@ public class NPC : MonoBehaviour
                             Boredom = 0;
                         }
                         Behavior = FiniteState.Travel;
-                    }
+                    //}
                 }
             }
             else if (Behavior == FiniteState.Investigate)
@@ -263,11 +265,11 @@ public class NPC : MonoBehaviour
                 }
             }
         }
-    }    
+    }
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void Stab()
@@ -313,7 +315,7 @@ public class NPC : MonoBehaviour
                     Behavior = FiniteState.Investigate;
                     SuspiciousBrow.SetActive(true);
                 }
-                
+
             }
             if (other.name.Contains("Stab") && !RecentDeath)
             {
@@ -321,7 +323,7 @@ public class NPC : MonoBehaviour
                 Stab();
             }
         }
-        
+
     }
 
     private void OnTriggerStay(Collider other)
