@@ -12,7 +12,7 @@ public class NPC : MonoBehaviour
 {
     NavMeshAgent Agent;
 
-    SpriteRenderer Sprite;
+    SpriteRenderer SpriteRenderer;
     Transform SpriteTransform;
     [HideInInspector]
     public bool FlipRight;
@@ -61,8 +61,8 @@ public class NPC : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        SpriteAtlas Atlas = (SpriteAtlas)Resources.Load("SpriteAtlas/NPC" + Random.Range(1, 3));
-        Atlas.GetSprites(Sprites);
+        Sprites = Resources.LoadAll<Sprite>("NPCSprites/NPC" + Random.Range(1, 3));
+        SpriteRenderer = transform.GetChild(0).GetChild(1).GetComponent<SpriteRenderer>();
         Agent = GetComponent<NavMeshAgent>();
         Behavior = FiniteState.Idle;
         Animator = GetComponent<Animator>();
@@ -99,6 +99,7 @@ public class NPC : MonoBehaviour
     }
     private void FixedUpdate()
     {
+        SpriteRenderer.sprite = Sprites[SpriteIndex];
         if (!IsDead)
         {
             if(Agent.velocity.magnitude == 0)

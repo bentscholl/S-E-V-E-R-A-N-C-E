@@ -59,21 +59,29 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(new Vector3(MovementVector.x,0,MovementVector.y).normalized * Time.deltaTime * MovementSpeed);
+        if (StabReady)
+        {
+            transform.Translate(MovementSpeed * Time.deltaTime * new Vector3(MovementVector.x, 0, MovementVector.y).normalized);
 
-        if(MovementVector.x > 0)
-        {
-            SpriteTransform.eulerAngles = new Vector3(0, 180, 0);
-        }
-        else if(MovementVector.x < 0)
-        {
-            SpriteTransform.eulerAngles = Vector3.zero;
-        }
+            if (MovementVector.x > 0)
+            {
+                SpriteTransform.eulerAngles = new Vector3(0, 180, 0);
+            }
+            else if (MovementVector.x < 0)
+            {
+                SpriteTransform.eulerAngles = Vector3.zero;
+            }
+        } 
+    }
+
+    private void FixedUpdate()
+    {
+        print(MovementVector);
     }
 
     public void OnMove(InputValue value)
     {
-        if (value.Get() != null && StabReady)
+        if (value.Get() != null)
         {
             MovementVector = (Vector2)value.Get();
             Animator.SetBool("Walking", true);
@@ -116,7 +124,6 @@ public class Player : MonoBehaviour
     public IEnumerator Stab()
     {
         StabReady = false;
-        MovementVector = Vector2.zero;
         StabCollider.enabled = true;
         AudioSource.PlayOneShot(StabFX);
         yield return new WaitForSeconds(.2f);

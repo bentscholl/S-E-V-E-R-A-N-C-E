@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     GameManager Instance;
+    string[] PlayerNames;
 
     public static AudioSource AudioSource;
     public static AudioClip PlayerJoin;
