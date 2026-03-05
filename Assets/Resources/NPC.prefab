@@ -478,6 +478,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   FlipRight: 0
+  SpriteIndex: 0
   IsRelocated: 0
   BodySpotting:
     serializedVersion: 2
@@ -486,8 +487,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 72
   Behavior: 0
-  Suspicion: 0
   MyRoom: {fileID: 0}
+  Suspicion: 0
   Patience: 0
   Boredom: 0
 --- !u!195 &521675407029858421
