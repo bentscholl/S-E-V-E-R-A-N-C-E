@@ -64,8 +64,8 @@ public class NPC : MonoBehaviour
     {
         //SpriteAtlas Atlas = (SpriteAtlas)Resources.Load("SpriteAtlas/NPC" + Random.Range(1, 3));
         //Atlas.GetSprites(Sprites);
-        Sprites = Resources.LoadAll<Sprite>("NPCs/NPC"+Random.Range(1,8));
-        Sprite = transform.GetChild(0).GetChild(1).GetComponent<SpriteRenderer>();
+        Sprites = Resources.LoadAll<Sprite>("NPCs/NPC"+Random.Range(1,16));
+        SpriteRenderer = transform.GetChild(0).GetChild(1).GetComponent<SpriteRenderer>();
         Agent = GetComponent<NavMeshAgent>();
         Behavior = FiniteState.Idle;
         Animator = GetComponent<Animator>();
@@ -86,7 +86,9 @@ public class NPC : MonoBehaviour
         MyRoom.Residents++;
         Vector3 location = MyRoom.transform.position + new Vector3(Random.Range(-MyRoom.XVariation, MyRoom.XVariation), 0, Random.Range(-MyRoom.ZVariation, MyRoom.ZVariation));
         Agent.SetDestination(location);
-        Agent.Warp(location);
+        NavMeshHit hit;
+        NavMesh.SamplePosition(location, out hit, 10f, NavMesh.AllAreas);
+        Agent.Warp(hit.position);
 
         Patience = Random.Range(10, 50);
         Boredom = 10000;
@@ -100,58 +102,63 @@ public class NPC : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        SpriteRenderer.sprite = Sprites[SpriteIndex];
-        if (!IsDead)
+        try
         {
-            if(Agent.velocity.magnitude == 0)
-            {
-                Animator.SetBool("Walking", false);
-            }
-            else
-            {
-                Animator.SetBool("Walking", true);
-            }
 
-            if (Suspicion >= 100 && Behavior != FiniteState.Escape)
+            if (IsRelocated)
+                SpriteRenderer.enabled = true;
+            SpriteRenderer.sprite = Sprites[SpriteIndex];
+            if (!IsDead)
             {
-                MyRoom.Residents--;
-                Invoke("SetDespawnable", 1);
-                Agent.destination = Escape;
-                Behavior = FiniteState.Escape;
-                SuspiciousBrow.SetActive(false);
-                ScaredBrow.SetActive(true);
-                Animator.SetTrigger("Run");
-                Agent.speed *= 2f;
-            }
-
-            if (Despawnable && Behavior == FiniteState.Escape && Agent.remainingDistance > 0 && Agent.remainingDistance < 1.1f)
-            {
-                Agent.destination = Escape;
-                NPCsEscaped++;
-                GameManager.AudioSource.PlayOneShot(GameManager.Leave);
-                GameManager.Money -= 20000;
-                Destroy(this.gameObject);
-            }
-            else if (Behavior == FiniteState.Idle)
-            {
-                Boredom+= .06f;
-                if(Boredom >= Patience)
+                if (Agent.velocity.magnitude == 0)
                 {
-                    int i = Random.Range(0, 7);
-                    if (i == 0)
+                    Animator.SetBool("Walking", false);
+                }
+                else
+                {
+                    Animator.SetBool("Walking", true);
+                }
+
+                if (Suspicion >= 100 && Behavior != FiniteState.Escape)
+                {
+                    MyRoom.Residents--;
+                    Invoke("SetDespawnable", 1);
+                    Agent.destination = Escape;
+                    Behavior = FiniteState.Escape;
+                    SuspiciousBrow.SetActive(false);
+                    ScaredBrow.SetActive(true);
+                    Animator.SetTrigger("Run");
+                    Agent.speed *= 2f;
+                }
+
+                if (Despawnable && Behavior == FiniteState.Escape && Agent.remainingDistance > 0 && Agent.remainingDistance < 1.1f)
+                {
+                    Agent.destination = Escape;
+                    NPCsEscaped++;
+                    GameManager.AudioSource.PlayOneShot(GameManager.Leave);
+                    GameManager.Money -= 20000;
+                    Destroy(this.gameObject);
+                }
+                else if (Behavior == FiniteState.Idle)
+                {
+                    Boredom += .06f;
+                    if (Boredom >= Patience)
                     {
-                        MyRoom.Residents--;
-                        MyRoom = Rooms[Random.Range(0, Rooms.Length)];
-                        while (MyRoom.Residents >= MyRoom.Capacity)
+                        int i = Random.Range(0, 7);
+                        if (i == 0)
                         {
+                            MyRoom.Residents--;
                             MyRoom = Rooms[Random.Range(0, Rooms.Length)];
-                        }
-                        MyRoom.Residents++;
-                        Vector3 location = MyRoom.transform.position + new Vector3(Random.Range(-MyRoom.XVariation, MyRoom.XVariation), 0, Random.Range(-MyRoom.ZVariation, MyRoom.ZVariation + 1));
-                        Agent.SetDestination(location);
-                        Boredom = 0;
-                        Behavior = FiniteState.Travel;
-                    }/*
+                            while (MyRoom.Residents >= MyRoom.Capacity)
+                            {
+                                MyRoom = Rooms[Random.Range(0, Rooms.Length)];
+                            }
+                            MyRoom.Residents++;
+                            Vector3 location = MyRoom.transform.position + new Vector3(Random.Range(-MyRoom.XVariation, MyRoom.XVariation), 0, Random.Range(-MyRoom.ZVariation, MyRoom.ZVariation + 1));
+                            Agent.SetDestination(location);
+                            Boredom = 0;
+                            Behavior = FiniteState.Travel;
+                        }/*
                     else
                     {
 
@@ -171,68 +178,73 @@ public class NPC : MonoBehaviour
                             Boredom = 0;
                         }
                         Behavior = FiniteState.Travel;
-                    //}
+                        //}
+                    }
                 }
-            }
-            else if (Behavior == FiniteState.Investigate)
-            {
-                if(Agent.remainingDistance < 1.5f)
+                else if (Behavior == FiniteState.Investigate)
                 {
-                    Behavior = FiniteState.Travel;
-                    Vector3 location = MyRoom.transform.position + new Vector3(Random.Range(-MyRoom.XVariation, MyRoom.XVariation), 0, Random.Range(-MyRoom.ZVariation, MyRoom.ZVariation + 1));
-                    Agent.SetDestination(location);
-                    Boredom = 0;
-                    SuspiciousBrow.SetActive(false);
+                    if (Agent.remainingDistance < 1.5f)
+                    {
+                        Behavior = FiniteState.Travel;
+                        Vector3 location = MyRoom.transform.position + new Vector3(Random.Range(-MyRoom.XVariation, MyRoom.XVariation), 0, Random.Range(-MyRoom.ZVariation, MyRoom.ZVariation + 1));
+                        Agent.SetDestination(location);
+                        Boredom = 0;
+                        SuspiciousBrow.SetActive(false);
+                    }
                 }
-            }
-            else if (Behavior == FiniteState.Travel)
-            {
-                if (Agent.remainingDistance < 2)
-                    Behavior = FiniteState.Idle;
-            }
-
-            SpriteParent.LookAt(SpriteParent.position - new Vector3(0, 0, -1));
-
-            if (Agent.desiredVelocity.x > 0)
-            {
-                FlipRight = true;
-            }
-            else if (Agent.desiredVelocity.x < 0)
-            {
-                FlipRight = false;
-            }
-
-            if (FlipRight)
-            {
-                SpriteParent.eulerAngles = new Vector3(0, 180, 0);
-            }
-            else
-            {
-                SpriteParent.eulerAngles = Vector3.zero;
-            }
-
-            Brows.localPosition = new Vector3(0, 0, -Brows.forward.z * .01f);
-
-            if (Player.KillerTransform != null)
-            {
-                float DistanceMeathead = Vector3.Distance(transform.position,Meathead.Instance.transform.position);
-                float DistanceCombover = Vector3.Distance(transform.position, Combover.Instance.transform.position);
-                sawKiller = false;
-                if (DistanceMeathead < 4.5f)
+                else if (Behavior == FiniteState.Travel)
                 {
-                    CheckSurroundings(Meathead.Instance.transform.position);
+                    if (Agent.remainingDistance < 2)
+                        Behavior = FiniteState.Idle;
                 }
-                if (DistanceCombover < 4.5f)
+
+                SpriteParent.LookAt(SpriteParent.position - new Vector3(0, 0, -1));
+
+                if (Agent.desiredVelocity.x > 0)
                 {
-                    CheckSurroundings(Combover.Instance.transform.position);
+                    FlipRight = true;
                 }
-                if (!sawKiller)
+                else if (Agent.desiredVelocity.x < 0)
                 {
-                    Suspicion -= .5f;
-                    if (Suspicion < 0)
-                    { Suspicion = 0; }
+                    FlipRight = false;
+                }
+
+                if (FlipRight)
+                {
+                    SpriteParent.eulerAngles = new Vector3(0, 180, 0);
+                }
+                else
+                {
+                    SpriteParent.eulerAngles = Vector3.zero;
+                }
+
+                Brows.localPosition = new Vector3(0, 0, -Brows.forward.z * .01f);
+
+                if (Player.KillerTransform != null)
+                {
+                    float DistanceMeathead = Vector3.Distance(transform.position, Meathead.Instance.transform.position);
+                    float DistanceCombover = Vector3.Distance(transform.position, Combover.Instance.transform.position);
+                    sawKiller = false;
+                    if (DistanceMeathead < 4.5f)
+                    {
+                        CheckSurroundings(Meathead.Instance.transform.position);
+                    }
+                    if (DistanceCombover < 4.5f)
+                    {
+                        CheckSurroundings(Combover.Instance.transform.position);
+                    }
+                    if (!sawKiller)
+                    {
+                        Suspicion -= .5f;
+                        if (Suspicion < 0)
+                        { Suspicion = 0; }
+                    }
                 }
             }
+        }
+        catch (Exception e)
+        {
+            Debug.LogError(e.ToString());
         }
     }
 

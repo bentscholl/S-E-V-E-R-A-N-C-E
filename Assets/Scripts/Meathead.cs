@@ -66,7 +66,6 @@ public class Meathead : Player
             CarriedTransform.GetComponent<NPC>().IsRelocated = true;
             CarriedTransform.localPosition = new Vector3(-SpriteTransform.right.x * .2f, 0, -.05f);
             CarriedTransform.parent = null;
-            CarriedSprite.enabled = true;
             CarriedSprite = null;
             CarriedTransform = null;
             IsCarrying = false;
