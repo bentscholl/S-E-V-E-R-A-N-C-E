@@ -28,8 +28,11 @@ public class GameManager : MonoBehaviour
     bool GameOver;
     int StartingTotal;
     public static int Money = 0;
+
+    public static int Level;
     void Awake()
     {
+        Level = SceneManager.GetActiveScene().buildIndex;
         Total = GameObject.Find("Total").GetComponentInChildren<TextMeshProUGUI>();
         Kills = GameObject.Find("Kills").GetComponentInChildren<TextMeshProUGUI>();
         Lost = GameObject.Find("Lost").GetComponentInChildren<TextMeshProUGUI>();
@@ -48,8 +51,23 @@ public class GameManager : MonoBehaviour
 
         NPC.NPCsEscaped = 0;
         NPC.NPCsKilled = 0;
-        Money = 0;
+
+        
         //StartCoroutine(EndGame());
+    }
+
+    private void Start()
+    {
+        if (PlayerController.ComboverController != null && PlayerController.MeatheadController != null)
+        {
+            Meathead.Instance.NewLevel();
+            Combover.Instance.NewLevel();
+            print("help");
+            GameObject StartPanel = GameObject.Find("StartPanel");
+            StartPanel.GetComponent<Animator>().SetTrigger("Start");
+            
+        }
+        Money = 0;
     }
 
     private void Update()
@@ -93,6 +111,26 @@ public class GameManager : MonoBehaviour
         }
         Time.timeScale = 1;
         yield return new WaitForSeconds(3);
-        SceneManager.LoadScene(0);
+
+        NPC[] RemainingNPCs = FindObjectsByType<NPC>(FindObjectsSortMode.InstanceID);
+
+        foreach (NPC npc in RemainingNPCs)
+        {
+            Destroy(npc.gameObject);
+        }
+
+        if(Money < 0 )
+        {
+            SceneManager.LoadScene(Level);
+        }
+        else if(Level < 5)
+        {
+            SceneManager.LoadScene(++Level);
+        }
+        else
+        {
+            //Change to credits scroll
+            SceneManager.LoadScene(0);
+        }
     }
 }

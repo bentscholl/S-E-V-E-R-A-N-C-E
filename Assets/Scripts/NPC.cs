@@ -6,13 +6,15 @@ using Unity.Mathematics;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Rendering;
 using UnityEngine.U2D;
 using Random = UnityEngine.Random;
 public class NPC : MonoBehaviour
 {
     NavMeshAgent Agent;
 
-    SpriteRenderer SpriteRenderer;
+    public SpriteRenderer SpriteRenderer;
+    public SortingGroup SortingGroup;
     Transform SpriteTransform;
     [HideInInspector]
     public bool FlipRight;
@@ -66,13 +68,14 @@ public class NPC : MonoBehaviour
         //Atlas.GetSprites(Sprites);
         Sprites = Resources.LoadAll<Sprite>("NPCs/NPC"+Random.Range(1,16));
         SpriteRenderer = transform.GetChild(0).GetChild(1).GetComponent<SpriteRenderer>();
+        SortingGroup = GetComponent<SortingGroup>();
         Agent = GetComponent<NavMeshAgent>();
         Behavior = FiniteState.Idle;
         Animator = GetComponent<Animator>();
 
         CorpseRadius = transform.GetChild(2).GetComponent<SphereCollider>();
         DeathCall = transform.GetChild(1).GetComponent<SphereCollider>();
-        Splatter = GetComponent<ParticleSystem>();
+        Splatter = GetComponentInChildren<ParticleSystem>();
         Escape = GameObject.Find("Exit").transform.position;
 
         Rooms = GameObject.Find("Locales").GetComponentsInChildren<Room>();
@@ -104,10 +107,11 @@ public class NPC : MonoBehaviour
     {
         try
         {
-
             if (IsRelocated)
                 SpriteRenderer.enabled = true;
+
             SpriteRenderer.sprite = Sprites[SpriteIndex];
+
             if (!IsDead)
             {
                 if (Agent.velocity.magnitude == 0)
@@ -133,7 +137,7 @@ public class NPC : MonoBehaviour
 
                 if (Despawnable && Behavior == FiniteState.Escape && Agent.remainingDistance > 0 && Agent.remainingDistance < 1.1f)
                 {
-                    Agent.destination = Escape;
+                    transform.position = Vector3.zero;
                     NPCsEscaped++;
                     GameManager.AudioSource.PlayOneShot(GameManager.Leave);
                     GameManager.Money -= 20000;
@@ -158,19 +162,7 @@ public class NPC : MonoBehaviour
                             Agent.SetDestination(location);
                             Boredom = 0;
                             Behavior = FiniteState.Travel;
-                        }/*
-                    else
-                    {
-
-                        if (i == 1 && Bathroom.Residents == 0)
-                        {
-                            MyRoom.Residents--;
-                            MyRoom = Bathroom;
-                            MyRoom.Residents++;
-                            Vector3 location = MyRoom.transform.position + new Vector3(Random.Range(-MyRoom.XVariation, MyRoom.XVariation), 0, Random.Range(-MyRoom.ZVariation, MyRoom.ZVariation + 1));
-                            Agent.SetDestination(location);
-                            Boredom = 0;
-                        }*/
+                        }
                         else
                         {
                             Vector3 location = MyRoom.transform.position + new Vector3(Random.Range(-MyRoom.XVariation, MyRoom.XVariation), 0, Random.Range(-MyRoom.ZVariation, MyRoom.ZVariation + 1));
@@ -178,7 +170,6 @@ public class NPC : MonoBehaviour
                             Boredom = 0;
                         }
                         Behavior = FiniteState.Travel;
-                        //}
                     }
                 }
                 else if (Behavior == FiniteState.Investigate)

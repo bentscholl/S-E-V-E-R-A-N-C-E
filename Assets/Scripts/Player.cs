@@ -10,6 +10,7 @@ using static UnityEngine.InputSystem.InputAction;
 
 public class Player : MonoBehaviour
 {
+    protected bool FacingRight;
     protected Vector2 MovementVector;
     public float MovementSpeed;
     public PlayerInput input;
@@ -36,6 +37,8 @@ public class Player : MonoBehaviour
 
     AudioSource AudioSource;
 
+    protected Vector3 StartOffset;
+
     // Start is called before the first frame update
     protected void Start()
     {
@@ -54,6 +57,7 @@ public class Player : MonoBehaviour
         AudioSource = gameObject.AddComponent<AudioSource>();
         StabFX = Resources.Load<AudioClip>("SFX/Knife");
         PoofFX = Resources.Load<AudioClip>("SFX/Poof");
+        NewLevel();
     }
 
     // Update is called once per frame
@@ -66,17 +70,24 @@ public class Player : MonoBehaviour
             if (MovementVector.x > 0)
             {
                 SpriteTransform.eulerAngles = new Vector3(0, 180, 0);
+                FacingRight = true;
             }
             else if (MovementVector.x < 0)
             {
                 SpriteTransform.eulerAngles = Vector3.zero;
+                FacingRight = false;
             }
         } 
     }
 
     private void FixedUpdate()
     {
-        print(MovementVector);
+    }
+
+    public void NewLevel()
+    {
+        Transform Start = GameObject.Find("StartPoint").transform;
+        MeshAgent.Warp(Start.position + StartOffset);
     }
 
     public void OnMove(InputValue value)

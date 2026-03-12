@@ -8,29 +8,34 @@ public class Meathead : Player
     public static Meathead Instance;
 
     bool IsCarrying;
-    SpriteRenderer CarriedSprite;
+    NPC Corpse;
     Transform CarriedTransform;
 
-    GameObject Corpse;
+    GameObject Hands;
 
     AudioClip PickUp;
     AudioClip PutDown;
+
     public new void Start()
     {
+        StartOffset = new Vector3(0, 1, .5f);
         base.Start();
         Instance = this;
         MovementSpeed = 2;
         OtherPlayer = FindAnyObjectByType<Combover>();
         OtherPlayer.OtherPlayer = this;
-        MeshAgent.Warp(new Vector3(-15, 1, 47));
-        Corpse = transform.GetChild(1).GetChild(1).gameObject;
-        Corpse.SetActive(false);
+        Hands = transform.GetChild(1).GetChild(1).gameObject;
+        Hands.SetActive(false);
         PickUp = Resources.Load<AudioClip>("SFX/PickUp");
         PutDown = Resources.Load<AudioClip>("SFX/PutDown");
     }
 
     private void FixedUpdate()
     {
+        if (IsCarrying)
+        {
+            Corpse.SpriteRenderer.flipX = FacingRight;
+        }
     }
 
     public new void OnWest(InputValue value)
@@ -52,12 +57,13 @@ public class Meathead : Player
                 GameManager.AudioSource.PlayOneShot(PickUp);
                 CarriedTransform = hit.collider.transform;
                 CarriedTransform.GetComponent<NPC>().IsRelocated = false;
-                CarriedSprite = CarriedTransform.GetComponentInChildren<SpriteRenderer>();
-                CarriedSprite.enabled = false;
+                Corpse = CarriedTransform.GetComponent<NPC>();
+                Corpse.SortingGroup.enabled = false;
                 CarriedTransform.parent = transform;
-                CarriedTransform.localPosition = new Vector3(.05f, .2f, -.1f);
+                CarriedTransform.localPosition = new Vector3(0, 0.27f, 0);
                 IsCarrying = true;
-                Corpse.SetActive(true);
+                Hands.SetActive(true);
+                Animator.SetBool("Carry", true);
             }
         }
         else if(IsCarrying)
@@ -65,11 +71,14 @@ public class Meathead : Player
             GameManager.AudioSource.PlayOneShot(PickUp);
             CarriedTransform.GetComponent<NPC>().IsRelocated = true;
             CarriedTransform.localPosition = new Vector3(-SpriteTransform.right.x * .2f, 0, -.05f);
+            Corpse.SpriteRenderer.enabled = false;
+            Corpse.SortingGroup.enabled = true;
             CarriedTransform.parent = null;
-            CarriedSprite = null;
+            Corpse = null;
             CarriedTransform = null;
             IsCarrying = false;
-            Corpse.SetActive(false);
+            Hands.SetActive(false);
+            Animator.SetBool("Carry", false);
         }
     }
 

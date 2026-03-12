@@ -20,10 +20,10 @@ public class Combover : Player
     AudioClip Woosh;
     private new void Start()
     {
+        StartOffset = new Vector3(0, 1, -.5f);
         base.Start();
         Instance = this;
         MovementSpeed = 2.5f;
-        MeshAgent.Warp(new Vector3(-15, 1, 46));
         Sprite = transform.GetChild(1).gameObject;
         Camera = GetComponentInChildren<Camera>();
         BoxCollider = GetComponent<BoxCollider>();
@@ -59,7 +59,7 @@ public class Combover : Player
         {
             base.OnNorth(value);
         }
-        else if (Vent.Vents.Count >= 2)
+        else if (Vent.Vents.Count >= 2 && value.isPressed)
         {
             MoveVents(1);
         }
@@ -88,6 +88,7 @@ public class Combover : Player
 
     IEnumerator PanCamera()
     {
+        Sprite.SetActive(false);
         Vector3 start;
         Vector3 end;
         start = Camera.transform.position;
@@ -105,33 +106,37 @@ public class Combover : Player
 
     public void OnSouth(InputValue value)
     {
-        if (!IsVenting && IsKiller)
+        if (StabReady)
         {
-            RaycastHit hit;
-            Physics.Raycast(transform.position, -SpriteTransform.right, out hit, 1);
-            if (hit.collider && hit.collider.name.Contains("Vent"))
+            if (!IsVenting && IsKiller)
+            {
+                RaycastHit hit;
+                Physics.Raycast(transform.position, -SpriteTransform.right, out hit, 1);
+                if (hit.collider && hit.collider.name.Contains("Vent"))
+                {
+                    GameManager.AudioSource.PlayOneShot(VentFX);
+                    Vent = hit.collider.GetComponent<Vent>();
+                    MeshAgent.Warp(Vent.transform.position + new Vector3(0, 1, 0));
+                    IsVenting = true;
+                    MovementVector = Vector2.zero;
+                    Animator.SetBool("Venting", true);
+                    Animator.SetBool("Walking", false);
+                    BoxCollider.enabled = false;
+                    Vent.ToggleArrows(true);
+                    Vent.Animator.SetTrigger("Open");
+                }
+            }
+            else if (!panning && IsVenting)
             {
                 GameManager.AudioSource.PlayOneShot(VentFX);
-                Vent = hit.collider.GetComponent<Vent>();
-                MeshAgent.Warp(Vent.transform.position + new Vector3(0, 1, 0));
-                IsVenting = true;
-                MovementVector = Vector2.zero;
-                Animator.SetBool("Walking", false);
-                Sprite.SetActive(false);
-                BoxCollider.enabled = false;
-                Vent.ToggleArrows(true);
+                Sprite.SetActive(true);
+                Vent.ToggleArrows(false);
                 Vent.Animator.SetTrigger("Open");
+                Vent = null;
+                Animator.SetBool("Venting", false);
+                BoxCollider.enabled = true;
+                IsVenting = false;
             }
-        }
-        else if (!panning && IsVenting)
-        {
-            GameManager.AudioSource.PlayOneShot(VentFX);
-            Vent.ToggleArrows(false);
-            Vent.Animator.SetTrigger("Open");
-            Vent = null;
-            Sprite.SetActive(true);
-            BoxCollider.enabled = true;
-            IsVenting = false;
         }
     }
 }

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6404673782579836710}
   - component: {fileID: 2122077367998828429}
   m_Layer: 0
-  m_Name: Corpse
+  m_Name: Hands
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 1240601528005660322}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.141, y: 0.265, z: 0}
+  m_LocalPosition: {x: 0.01, y: -0.024, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -72,8 +72,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 3f8017d74c0edd24ea3b0ac64b347b10, type: 3}
+  m_SortingOrder: 1
+  m_Sprite: {fileID: 21300000, guid: 16c5aa4fbbec3724998e387009886696, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -238,6 +238,7 @@ GameObject:
   - component: {fileID: -671901648697489535}
   - component: {fileID: 7509862497647705679}
   - component: {fileID: 6677315649666517699}
+  - component: {fileID: 2588357595957305077}
   m_Layer: 3
   m_Name: Meathead
   m_TagString: Untagged
@@ -365,7 +366,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_RenderMode: 0
   m_MeshDistribution: 0
   m_SortMode: 0
@@ -5142,6 +5143,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.1, y: 0.1, z: 0.1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!210 &2588357595957305077
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4329442206600927829}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 1
+  m_SortAtRoot: 0
 --- !u!1 &5484437316909782236
 GameObject:
   m_ObjectHideFlags: 0
