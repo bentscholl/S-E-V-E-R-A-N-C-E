@@ -92,16 +92,24 @@ public class Player : MonoBehaviour
 
     public void OnMove(InputValue value)
     {
-        if (value.Get() != null)
+        if (Time.timeScale > 0)
         {
-            MovementVector = (Vector2)value.Get();
-            Animator.SetBool("Walking", true);
+            if (value.Get() != null)
+            {
+                MovementVector = (Vector2)value.Get();
+                Animator.SetBool("Walking", true);
+            }
+            else
+            {
+                MovementVector = Vector2.zero;
+                Animator.SetBool("Walking", false);
+            }
         }
-        else
-        {
-            MovementVector = Vector2.zero;
-            Animator.SetBool("Walking", false);
-        }
+    }
+
+    public void OnPause()
+    {
+        PauseManager.Instance.PauseButton();
     }
 
     /*

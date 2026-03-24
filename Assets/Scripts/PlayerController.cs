@@ -31,45 +31,12 @@ public class PlayerController : MonoBehaviour
             GameObject MeatheadObject = (GameObject) Instantiate(Resources.Load("Meathead"), transform);
             MeatheadObject.GetComponent<Meathead>().Start();
             Meathead.Instance.enabled = false;
-            StartCoroutine(StartGame());
+            StartCoroutine(GameManager.Instance.StartGame());
             MeatheadController = this;
         }
     }
 
-    private IEnumerator StartGame()
-    {
-        GameObject StartPanel = GameObject.Find("StartPanel");
-        TextMeshProUGUI StartText = StartPanel.GetComponentInChildren<TextMeshProUGUI>();
-        Animator animator = GameObject.Find("Mask").GetComponent<Animator>();
-        int KillerIndex = Random.Range(0, 2);
-        if (KillerIndex == 1)
-        {
-            animator.SetTrigger("Meat");
-            Meathead.Instance.Swap();
-        }
-        else
-        {
-            animator.SetTrigger("Comb");
-            Combover.Instance.Swap();
-        }
-        StartText.GetComponent<Animator>().enabled = false;
-        StartText.enabled = true;
-        yield return new WaitForSeconds(.2f);
-        StartText.text = "3";
-        GameManager.AudioSource.PlayOneShot(GameManager.Countdown);
-        yield return new WaitForSeconds(1);
-        StartText.text = "2";
-        GameManager.AudioSource.PlayOneShot(GameManager.Countdown);
-        yield return new WaitForSeconds(1);
-        StartText.text = "1";
-        GameManager.AudioSource.PlayOneShot(GameManager.Countdown);
-        yield return new WaitForSeconds(1);
-        StartText.text = "";
-        yield return new WaitForSeconds(.7f);
-        StartPanel.GetComponent<Animator>().SetTrigger("Start");
-        Meathead.Instance.enabled = true;
-        Combover.Instance.enabled = true;
-    }
+    
 
     
 }

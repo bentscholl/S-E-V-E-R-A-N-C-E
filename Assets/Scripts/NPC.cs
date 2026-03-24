@@ -32,7 +32,7 @@ public class NPC : MonoBehaviour
 
     public LayerMask BodySpotting;
     public LayerMask KillerSpotting;
-    enum FiniteState { Idle, Travel, Investigate, Escape, Dead };
+    enum FiniteState { Idle, Travel, Investigate, Escape, Follow, Dead };
     [SerializeField]
     private FiniteState Behavior;
 
@@ -293,12 +293,12 @@ public class NPC : MonoBehaviour
     public IEnumerator Die()
     {
         MyRoom.Residents--;
-        NPCsKilled++;
         GameManager.Money += 35000;
         Splatter.Play();
         GameManager.AudioSource.PlayOneShot(GameManager.Die);
         name = "Corpse";
         yield return new WaitForSeconds(.3f);
+        NPCsKilled++;
         DeathCall.enabled = true;
         CorpseRadius.enabled = true;
         RecentDeath = false;

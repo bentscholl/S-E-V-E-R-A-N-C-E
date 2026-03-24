@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    GameManager Instance;
+    public static GameManager Instance;
     string[] PlayerNames;
 
     public static AudioSource AudioSource;
@@ -21,10 +21,12 @@ public class GameManager : MonoBehaviour
     TextMeshProUGUI Kills;
     TextMeshProUGUI Lost;
 
+    GameObject Canvas;
     GameObject EndPanel;
     Animator EndAnimator;
     TextMeshProUGUI MoneyCounter;
 
+    public bool GameStarted;
     bool GameOver;
     int StartingTotal;
     public static int Money = 0;
@@ -52,23 +54,34 @@ public class GameManager : MonoBehaviour
         NPC.NPCsEscaped = 0;
         NPC.NPCsKilled = 0;
 
-        
-        //StartCoroutine(EndGame());
+        Canvas = GameObject.Find("Menu");
     }
 
     private void Start()
     {
+        Instance = this;
         if (PlayerController.ComboverController != null && PlayerController.MeatheadController != null)
         {
             Meathead.Instance.NewLevel();
             Combover.Instance.NewLevel();
-            print("help");
             GameObject StartPanel = GameObject.Find("StartPanel");
             StartPanel.GetComponent<Animator>().SetTrigger("Start");
-            
+            StartPanel.GetComponent<Animator>().speed = 2;
+            string prefix = "$";
+            if (Money <= 0)
+            {
+                MoneyCounter.color = Color.red;
+                prefix = "-$";
+            }
+            for (int i = 0; i <= 150; i++)
+            {
+                MoneyCounter.text = prefix + Money;
+            }
+            EndAnimator.SetTrigger("Rise");
         }
         Money = 0;
     }
+
 
     private void Update()
     {
@@ -89,6 +102,41 @@ public class GameManager : MonoBehaviour
             StartCoroutine(EndGame());
         }
         
+    }
+
+    public IEnumerator StartGame()
+    {
+        GameObject StartPanel = GameObject.Find("StartPanel");
+        TextMeshProUGUI StartText = StartPanel.GetComponentInChildren<TextMeshProUGUI>();
+        Animator animator = GameObject.Find("Mask").GetComponent<Animator>();
+        int KillerIndex = Random.Range(0, 2);
+        if (KillerIndex == 1)
+        {
+            animator.SetTrigger("Meat");
+            Meathead.Instance.Swap();
+        }
+        else
+        {
+            animator.SetTrigger("Comb");
+            Combover.Instance.Swap();
+        }
+        StartText.GetComponent<Animator>().enabled = false;
+        StartText.enabled = true;
+        yield return new WaitForSeconds(.2f);
+        StartText.text = "3";
+        GameManager.AudioSource.PlayOneShot(GameManager.Countdown);
+        yield return new WaitForSeconds(1);
+        StartText.text = "2";
+        GameManager.AudioSource.PlayOneShot(GameManager.Countdown);
+        yield return new WaitForSeconds(1);
+        StartText.text = "1";
+        GameManager.AudioSource.PlayOneShot(GameManager.Countdown);
+        yield return new WaitForSeconds(1);
+        StartText.text = "";
+        yield return new WaitForSeconds(.7f);
+        StartPanel.GetComponent<Animator>().SetTrigger("Start");
+        Meathead.Instance.enabled = true;
+        Combover.Instance.enabled = true;
     }
 
     IEnumerator EndGame()
