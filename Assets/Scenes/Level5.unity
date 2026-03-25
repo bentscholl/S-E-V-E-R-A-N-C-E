@@ -1015,7 +1015,7 @@ MonoBehaviour:
   Residents: 0
   Capacity: 6
   XVariation: 18
-  ZVariation: 5
+  ZVariation: 4
 --- !u!1 &329742562
 GameObject:
   m_ObjectHideFlags: 0
@@ -4003,7 +4003,7 @@ Transform:
   m_GameObject: {fileID: 550411213}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 24.16, y: 0, z: 0}
+  m_LocalPosition: {x: 27.86, y: 0, z: -1.18}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4730,6 +4730,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Glass Door (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 8353117931291834418, guid: aeac9d02c2cb9c2428762a545437463e,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 809915702}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4809,6 +4814,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Glass Door (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 8353117931291834418, guid: aeac9d02c2cb9c2428762a545437463e,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 1616231218}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5422,12 +5432,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1044509404}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -17.12, y: 0, z: 43.99}
+  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: -1.8700008, y: -0.03, z: -3.7032433}
   m_LocalScale: {x: 1, y: 1.3804, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 2002667593}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!1 &1057342064
 GameObject:
@@ -6015,7 +6025,7 @@ GameObject:
   - component: {fileID: 1239761332}
   - component: {fileID: 1239761334}
   m_Layer: 5
-  m_Name: Exit
+  m_Name: ExitButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6865,6 +6875,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Glass Door
       objectReference: {fileID: 0}
+    - target: {fileID: 8353117931291834418, guid: aeac9d02c2cb9c2428762a545437463e,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 1556173275}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7251,7 +7266,7 @@ Animator:
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 996c999c8c291654ebd40665806c2bdf, type: 2}
   m_CullingMode: 0
-  m_UpdateMode: 2
+  m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
@@ -15291,12 +15306,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1962036906}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -17.12, y: 0, z: 50.44}
+  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: -1.8700008, y: -0.03, z: 2.7467537}
   m_LocalScale: {x: 1, y: 1.3804, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 2002667593}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!1 &1996204459
 GameObject:
@@ -15435,6 +15450,8 @@ Transform:
   m_Children:
   - {fileID: 1901327543}
   - {fileID: 360631032}
+  - {fileID: 1044509409}
+  - {fileID: 1962036911}
   - {fileID: 1407717708}
   - {fileID: 838691789}
   - {fileID: 944464318}
@@ -16476,8 +16493,8 @@ SceneRoots:
   - {fileID: 1871463624}
   - {fileID: 817053152}
   - {fileID: 1579207448}
-  - {fileID: 1044509409}
-  - {fileID: 1962036911}
+  - {fileID: 1915810439}
+  - {fileID: 2002667593}
   - {fileID: 1798200664}
   - {fileID: 7464238407026971939}
   - {fileID: 1599976454}
@@ -16492,5 +16509,3 @@ SceneRoots:
   - {fileID: 1636270894}
   - {fileID: 2098840322}
   - {fileID: 4163225831582573963}
-  - {fileID: 1915810439}
-  - {fileID: 2002667593}

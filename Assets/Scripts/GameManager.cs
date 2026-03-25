@@ -97,8 +97,6 @@ public class GameManager : MonoBehaviour
 
         if(!GameOver && totalLeft == 0)
         {
-            GameOver = true;
-            Time.timeScale = .2f;
             StartCoroutine(EndGame());
         }
         
@@ -141,7 +139,10 @@ public class GameManager : MonoBehaviour
 
     IEnumerator EndGame()
     {
-        print(Money);
+        PauseManager.Pauseable = false;
+        GameOver = true;
+        Time.timeScale = .2f;
+        MoneyCounter.text = "";
         yield return new WaitForSeconds(.3f);
         EndAnimator.SetTrigger("Start");
         yield return new WaitForSeconds(.3f);
@@ -173,7 +174,9 @@ public class GameManager : MonoBehaviour
         }
         else if(Level < 5)
         {
-            SceneManager.LoadScene(++Level);
+            Level++;
+            PlayerPrefs.SetInt("Level", Level);
+            SceneManager.LoadScene(Level);
         }
         else
         {

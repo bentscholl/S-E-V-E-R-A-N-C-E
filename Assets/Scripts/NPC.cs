@@ -22,7 +22,7 @@ public class NPC : MonoBehaviour
     Sprite[] Sprites;
     public int SpriteIndex;
 
-    bool IsDead;
+    public bool IsDead;
     [HideInInspector]
     public bool IsRelocated;
     SphereCollider DeathCall;
@@ -32,9 +32,9 @@ public class NPC : MonoBehaviour
 
     public LayerMask BodySpotting;
     public LayerMask KillerSpotting;
-    enum FiniteState { Idle, Travel, Investigate, Escape, Follow, Dead };
+    public enum FiniteState { Idle, Travel, Investigate, Escape, Follow, Dead };
     [SerializeField]
-    private FiniteState Behavior;
+    public FiniteState Behavior;
 
     private Transform SpriteParent;
     private Transform Brows;
@@ -48,7 +48,10 @@ public class NPC : MonoBehaviour
 
     [SerializeField]
     Room MyRoom;
-    Room Bathroom;
+
+    Transform FollowedPlayer;
+
+
 
     public static int NPCsEscaped;
     public static int NPCsKilled;
@@ -128,6 +131,8 @@ public class NPC : MonoBehaviour
                     MyRoom.Residents--;
                     Invoke("SetDespawnable", 1);
                     Agent.destination = Escape;
+                    print(Escape);
+                    FollowedPlayer = null;
                     Behavior = FiniteState.Escape;
                     SuspiciousBrow.SetActive(false);
                     ScaredBrow.SetActive(true);
@@ -188,19 +193,26 @@ public class NPC : MonoBehaviour
                     if (Agent.remainingDistance < 2)
                         Behavior = FiniteState.Idle;
                 }
+                else if(Behavior == FiniteState.Follow)
+                {
+                    Agent.SetDestination(FollowedPlayer.position);
+                }    
 
-                SpriteParent.LookAt(SpriteParent.position - new Vector3(0, 0, -1));
+                    //Sprite Housekeeping
+                    SpriteParent.LookAt(SpriteParent.position - new Vector3(0, 0, -1));
 
                 if (Agent.desiredVelocity.x > 0)
                 {
                     FlipRight = true;
+                    
                 }
                 else if (Agent.desiredVelocity.x < 0)
                 {
                     FlipRight = false;
+                    
                 }
 
-                if (FlipRight)
+                if(FlipRight)
                 {
                     SpriteParent.eulerAngles = new Vector3(0, 180, 0);
                 }
@@ -209,8 +221,9 @@ public class NPC : MonoBehaviour
                     SpriteParent.eulerAngles = Vector3.zero;
                 }
 
-                Brows.localPosition = new Vector3(0, 0, -Brows.forward.z * .01f);
+                 Brows.localPosition = new Vector3(0, 0, -Brows.forward.z * .01f);
 
+                //Check Surroundings
                 if (Player.KillerTransform != null)
                 {
                     float DistanceMeathead = Vector3.Distance(transform.position, Meathead.Instance.transform.position);
@@ -275,6 +288,21 @@ public class NPC : MonoBehaviour
 
     }
 
+    public void Follow(Transform p)
+    {
+        FollowedPlayer = p;
+        Behavior = FiniteState.Follow;
+    }
+
+    public void Dismiss()
+    {
+        FollowedPlayer = null;
+        Boredom = 0;
+        Vector3 location = MyRoom.transform.position + new Vector3(Random.Range(-MyRoom.XVariation, MyRoom.XVariation), 0, Random.Range(-MyRoom.ZVariation, MyRoom.ZVariation + 1));
+        Agent.SetDestination(location);
+        Behavior = FiniteState.Travel;
+    }
+
     public void Stab()
     {
         IsDead = true;
@@ -282,6 +310,10 @@ public class NPC : MonoBehaviour
         gameObject.layer = LayerMask.NameToLayer("Dead");
         Animator.SetTrigger("Kill");
         Brows.gameObject.SetActive(false);
+        if(FollowedPlayer != null)
+        {
+            FollowedPlayer.GetComponent<Player>().FollowingNPC = null;
+        }    
         StartCoroutine(Die());
     }
 

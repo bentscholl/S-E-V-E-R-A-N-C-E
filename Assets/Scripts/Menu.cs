@@ -3,11 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Menu : MonoBehaviour
 {
     bool credits;
+    bool select;
+    int UnlockedLevels;
     GameObject StartButton;
+    GameObject DefaultElevator;
+    Button[] MainButtons;
 
     private void Awake()
     {
@@ -15,24 +20,67 @@ public class Menu : MonoBehaviour
             Destroy(PlayerController.MeatheadController.gameObject);
         if (PlayerController.ComboverController != null)
             Destroy(PlayerController.ComboverController.gameObject);
+
+        UnlockedLevels = PlayerPrefs.GetInt("Level");
+        if (UnlockedLevels == 0)
+            UnlockedLevels = 1;
+
+        Button[] Floors = GameObject.Find("Floors").GetComponentsInChildren<Button>();
+
+        for(int i = 0; i < UnlockedLevels; i++)
+        {
+            Floors[i].interactable = true;
+            Floors[i].GetComponent<Image>().color = Color.white;
+        }
     }
     private void Start()
     {
         credits = false;
         StartButton = GameObject.Find("Start");
+        DefaultElevator = GameObject.Find("Floor 5");
+        MainButtons = GameObject.Find("Main").GetComponentsInChildren<Button>();
     }
 
     private void Update()
     {
         if((Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0) && EventSystem.current.currentSelectedGameObject == null)
         {
-            EventSystem.current.SetSelectedGameObject(StartButton);
+            EventSystem.current.SetSelectedGameObject(EventSystem.current.firstSelectedGameObject);
         }
     }
-    public void Begin()
+    public void Select()
     {
-        GameManager.Level = 1;
-        SceneManager.LoadScene(1);
+        GameObject.Find("Elevator Panel").GetComponent<Animator>().SetBool("Toggle", true);
+        EventSystem.current.firstSelectedGameObject = DefaultElevator;
+        EventSystem.current.SetSelectedGameObject(DefaultElevator);
+
+        foreach (Button button in MainButtons)
+        {
+            button.interactable = false;
+        }
+
+        if(credits)
+        {
+            ToggleCredits();
+        }
+    }
+
+    public void Back()
+    {
+        GameObject.Find("Elevator Panel").GetComponent<Animator>().SetBool("Toggle", false);
+        EventSystem.current.firstSelectedGameObject = StartButton;
+        EventSystem.current.SetSelectedGameObject(StartButton);
+
+        foreach (Button button in MainButtons)
+        {
+            button.interactable = true;
+        }
+    }
+
+    public void Load(int Level)
+    {
+        GameManager.Level = Level;
+        SceneManager.LoadScene(Level);
     }
 
     public void End()
@@ -45,6 +93,18 @@ public class Menu : MonoBehaviour
         credits = !credits;
         GameObject.Find("CreditsNote").GetComponent<Animator>().SetBool("Toggle", credits);
     }
-        
-        
+
+    public void Reset()
+    {
+        PlayerPrefs.SetInt("Level", 1);
+        Button[] Floors = GameObject.Find("Floors").GetComponentsInChildren<Button>();
+
+        for (int i = 1; i < Floors.Length; i++)
+        {
+            Floors[i].interactable = false;
+            Floors[i].GetComponent<Image>().color = Color.gray;
+        }
+    }
+
+
 }

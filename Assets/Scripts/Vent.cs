@@ -10,20 +10,21 @@ public class Vent : MonoBehaviour
     Transform ArrowParent;
     public float ZAngle;
     public Animator Animator;
+    public SpriteRenderer[] Arrows;
     // Start is called before the first frame update
     void Start()
     {
         GameObject ArrowTemplate = (GameObject)Resources.Load("Arrow");
         ArrowParent = transform.GetChild(0);
-        Color[] Colors = { Color.blue, Color.yellow, Color.red };
         int count = 0;
+        Arrows = new SpriteRenderer[Vents.Count];
         foreach (var vent in Vents)
         {
             GameObject Arrow = Instantiate(ArrowTemplate, ArrowParent);
             Arrow.transform.LookAt(vent.transform.position, Vector3.up);
             Arrow.transform.Translate(0, 0, 1);
             SpriteRenderer Indicator = Arrow.GetComponent<SpriteRenderer>();
-            Indicator.color = Colors[count++];
+            Arrows[count++] = Indicator;
             Vector3 Direction = vent.transform.position - transform.position;
             ZAngle = Mathf.Atan2(Direction.z, Direction.x) * Mathf.Rad2Deg;
             float rad = Mathf.Atan2(Direction.z, Direction.x);
@@ -44,5 +45,18 @@ public class Vent : MonoBehaviour
     public void ToggleArrows(bool toggle)
     {
         ArrowParent.gameObject.SetActive(toggle);
+        if (toggle)
+        {
+            Select(0);
+        }
+    }
+
+    public void Select(int index)
+    {
+        foreach (SpriteRenderer spriteRenderer in Arrows)
+        {
+            spriteRenderer.color = Color.white;
+        }
+        Arrows[index].color = Color.yellow;
     }
 }

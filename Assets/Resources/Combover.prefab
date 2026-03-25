@@ -190,13 +190,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4a08d82db86b374f80caa4b2155768e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MovementVector: {x: 0, y: 0}
   MovementSpeed: 0
   input: {fileID: 0}
   OtherPlayer: {fileID: 0}
   Swapping: 0
   SwapOnCooldown: 0
   IsKiller: 0
-  StabReady: 0
+  Animator: {fileID: 0}
+  FollowingNPC: {fileID: 0}
   IsVenting: 0
   Sprite: {fileID: 0}
 --- !u!195 &8094047402423988276

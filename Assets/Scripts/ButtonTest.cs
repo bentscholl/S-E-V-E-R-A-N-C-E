@@ -3,15 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UIElements;
+using UnityEngine.UI;
+using Image = UnityEngine.UI.Image;
 
 public class ButtonTest : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    Button Button;
+    UnityEngine.UI.Button Button;
     EventSystem system;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         system = FindAnyObjectByType<EventSystem>();
+        Button = GetComponent<UnityEngine.UI.Button>();
+        if(!Button.interactable)
+        {
+            GetComponent<Image>().color = Color.gray;
+        }
     }
 
     // Update is called once per frame
@@ -22,13 +29,19 @@ public class ButtonTest : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        system.SetSelectedGameObject(this.gameObject);
-        system.sendNavigationEvents = false;
+        if (Button.interactable)
+        {
+            system.SetSelectedGameObject(this.gameObject);
+            system.sendNavigationEvents = false;
+        }
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        system.sendNavigationEvents = true;
-        system.SetSelectedGameObject(null);
+        if (Button.interactable)
+        {
+            system.sendNavigationEvents = true;
+            system.SetSelectedGameObject(null);
+        }
     }
 }

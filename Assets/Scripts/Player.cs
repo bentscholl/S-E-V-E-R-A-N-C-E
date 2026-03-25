@@ -11,11 +11,10 @@ using static UnityEngine.InputSystem.InputAction;
 public class Player : MonoBehaviour
 {
     protected bool FacingRight;
-    protected Vector2 MovementVector;
+    public Vector2 MovementVector;
     public float MovementSpeed;
     public PlayerInput input;
     protected Transform SpriteTransform;
-    private SphereCollider YellCollider;
     private BoxCollider StabCollider;
 
     public Player OtherPlayer;
@@ -23,13 +22,14 @@ public class Player : MonoBehaviour
     public bool SwapOnCooldown;
 
     public bool IsKiller;
-    protected Animator Animator;
+    public Animator Animator;
     ParticleSystem ParticleSystem;
 
     protected NavMeshAgent MeshAgent;
 
     public static Transform KillerTransform;
-    public bool StabReady;
+    private bool StabReady;
+    protected bool Stabbing;
 
     AudioClip StabFX;
     AudioClip InteractFX;
@@ -39,13 +39,14 @@ public class Player : MonoBehaviour
 
     protected Vector3 StartOffset;
 
+    public NPC FollowingNPC;
+
     // Start is called before the first frame update
     protected void Start()
     {
         input = GetComponent<PlayerInput>();
         MovementVector = Vector2.zero;
         SpriteTransform = GetComponentInChildren<SpriteRenderer>().transform;
-        YellCollider = GetComponent<SphereCollider>();
         StabCollider = transform.GetChild(1).GetComponentInChildren<BoxCollider>();
         StabCollider.enabled = false;
         Animator = GetComponent<Animator>();
@@ -63,7 +64,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (StabReady)
+        if (!Stabbing)
         {
             transform.Translate(MovementSpeed * Time.deltaTime * new Vector3(MovementVector.x, 0, MovementVector.y).normalized);
 
@@ -109,6 +110,8 @@ public class Player : MonoBehaviour
 
     public void OnPause()
     {
+        MovementVector = Vector2.zero;
+        OtherPlayer.MovementVector = Vector2.zero;
         PauseManager.Instance.PauseButton();
     }
 
@@ -120,16 +123,9 @@ public class Player : MonoBehaviour
             StartCoroutine(Yell());
     }*/
 
-    public IEnumerator Yell()
-    {
-        YellCollider.enabled = true;
-        yield return new WaitForSeconds(.2f);
-        YellCollider.enabled = false;
-    }
-
     public void OnWest(InputValue value)
     {
-        if (IsKiller)
+        if (IsKiller && enabled)
         {
             if (StabReady)
             {
@@ -140,20 +136,49 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void OnSouth(InputValue value)
+    {
+        if (!IsKiller && enabled)
+        {
+            if (FollowingNPC == null)
+            {
+                RaycastHit hit;
+                Physics.Raycast(transform.position, -SpriteTransform.right, out hit, 1);
+                if (hit.collider)
+                {
+                    NPC npc = hit.collider.GetComponent<NPC>();
+                    if (npc != null && !npc.IsDead && npc.Behavior != NPC.FiniteState.Escape)
+                    {
+                        npc.Follow(transform);
+                        FollowingNPC = npc;
+                    }
+                }
+            }
+            else
+            {
+                FollowingNPC.Dismiss();
+                FollowingNPC = null;
+            }
+        }
+    }
+
     public IEnumerator Stab()
     {
         StabReady = false;
+        Stabbing = true;
         StabCollider.enabled = true;
         AudioSource.PlayOneShot(StabFX);
         yield return new WaitForSeconds(.2f);
         StabCollider.enabled = false;
         yield return new WaitForSeconds(.4f);
+        Stabbing = false;
+        yield return new WaitForSeconds(1f);
         StabReady = true;
     }
 
     public void OnNorth(InputValue value)
     {
-        if (OtherPlayer != null && !SwapOnCooldown)
+        if (OtherPlayer != null && !SwapOnCooldown && enabled)
         {
             Swapping = value.isPressed;
             if (OtherPlayer.Swapping && Swapping && Vector3.Distance(transform.position, OtherPlayer.transform.position) < 2)
@@ -181,6 +206,12 @@ public class Player : MonoBehaviour
         SwapOnCooldown = true;
         ParticleSystem.Play();
         Invoke("SwapCooldownDone", 1.5f);
+
+        if(FollowingNPC != null)
+        {
+            FollowingNPC.Dismiss();
+            FollowingNPC = null;
+        }
     }
 
     public void SwapCooldownDone()

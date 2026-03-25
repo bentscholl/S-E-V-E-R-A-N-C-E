@@ -46,9 +46,10 @@ public class Meathead : Player
         }
     }    
 
-    public void OnSouth(InputValue value)
+    public new void OnSouth(InputValue value)
     {
-        if (!IsCarrying && IsKiller)
+        base.OnSouth(value);
+        if (!IsCarrying && IsKiller && enabled)
         {
             RaycastHit hit;
             Physics.Raycast(transform.position, -SpriteTransform.right, out hit, 1);

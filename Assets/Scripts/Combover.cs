@@ -9,7 +9,10 @@ public class Combover : Player
 {
     public static Combover Instance;
     public bool IsVenting;
+    bool VentMoveReset;
+    bool LastVentMoveRight;
     Vent Vent;
+    int VentIndex;
     public GameObject Sprite;
     BoxCollider BoxCollider;
 
@@ -23,7 +26,7 @@ public class Combover : Player
         StartOffset = new Vector3(0, 1, -.5f);
         base.Start();
         Instance = this;
-        MovementSpeed = 2.5f;
+        MovementSpeed = 3f;
         Sprite = transform.GetChild(1).gameObject;
         Camera = GetComponentInChildren<Camera>();
         BoxCollider = GetComponent<BoxCollider>();
@@ -39,6 +42,46 @@ public class Combover : Player
         {
             base.OnMove(value);
         }
+        else
+        {
+            if(value.Get() != null)
+            {
+                Vector2 vec = (Vector2)value.Get();
+                if (vec.x > 0 && (VentMoveReset || !LastVentMoveRight))
+                {
+                    if(VentIndex < Vent.Vents.Count-1)
+                    {
+                        Vent.Select(++VentIndex);
+                    }
+                    else
+                    {
+                        VentIndex = 0;
+                        Vent.Select(VentIndex);
+                    }
+                    LastVentMoveRight = true;
+                    VentMoveReset = false;
+                }
+                else if (vec.x < 0 && (VentMoveReset || LastVentMoveRight))
+                {
+                    if (VentIndex > 0)
+                    {
+                        Vent.Select(--VentIndex);
+                    }
+                    else
+                    {
+                        VentIndex = Vent.Vents.Count-1;
+                        Vent.Select(VentIndex);
+                    }
+                        LastVentMoveRight = false;
+                    VentMoveReset = false;
+                }
+             }
+            else
+            {
+                VentMoveReset = true;
+            }
+        }
+        
     }
 
     public new void OnWest(InputValue value)
@@ -47,9 +90,9 @@ public class Combover : Player
         {
             base.OnWest(value);
         }
-        else if (Vent.Vents.Count >= 1)
+        else if (enabled)
         {
-            MoveVents(0);
+            MoveVents(VentIndex);
         }
     }
 
@@ -59,18 +102,11 @@ public class Combover : Player
         {
             base.OnNorth(value);
         }
-        else if (Vent.Vents.Count >= 2 && value.isPressed)
-        {
-            MoveVents(1);
-        }
     }
 
     public new void OnEast(InputValue value)
     {
-        if (IsVenting && Vent.Vents.Count >= 3)
-        {
-            MoveVents(2);
-        }
+
     }
 
     public void MoveVents(int index)
@@ -80,6 +116,7 @@ public class Combover : Player
             GameManager.AudioSource.PlayOneShot(Woosh);
             Vent.ToggleArrows(false);
             Vent = Vent.Vents[index];
+            VentIndex = 0;
             Vent.ToggleArrows(true);
             panning = true;
             StartCoroutine(PanCamera());
@@ -104,9 +141,10 @@ public class Combover : Player
 
 
 
-    public void OnSouth(InputValue value)
+    public new void OnSouth(InputValue value)
     {
-        if (StabReady)
+        base.OnSouth(value);
+        if (!Stabbing && enabled)
         {
             if (!IsVenting && IsKiller)
             {
@@ -122,6 +160,7 @@ public class Combover : Player
                     Animator.SetBool("Venting", true);
                     Animator.SetBool("Walking", false);
                     BoxCollider.enabled = false;
+                    VentIndex = 0;
                     Vent.ToggleArrows(true);
                     Vent.Animator.SetTrigger("Open");
                 }
