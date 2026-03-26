@@ -1397,6 +1397,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Glass Door
       objectReference: {fileID: 0}
+    - target: {fileID: 8353117931291834418, guid: aeac9d02c2cb9c2428762a545437463e,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 542458166}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3427,6 +3432,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Glass Door (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 8353117931291834418, guid: aeac9d02c2cb9c2428762a545437463e,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 1212666688}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4138,6 +4148,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Glass Door (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 8353117931291834418, guid: aeac9d02c2cb9c2428762a545437463e,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 855609481}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5395,6 +5410,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Glass Door (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 8353117931291834418, guid: aeac9d02c2cb9c2428762a545437463e,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 1864117666}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -12773,7 +12793,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1472236544}
   m_Layer: 0
-  m_Name: Exit
+  m_Name: Escape
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -21686,8 +21706,8 @@ Transform:
   - {fileID: 524773775}
   - {fileID: 678626392}
   - {fileID: 442164667}
-  - {fileID: 1472236544}
   - {fileID: 1880893560}
+  - {fileID: 1472236544}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2010581338

@@ -55,6 +55,11 @@ public class GameManager : MonoBehaviour
         NPC.NPCsKilled = 0;
 
         Canvas = GameObject.Find("Menu");
+
+        if (PauseManager.IsPaused)
+            PauseManager.IsPaused = false;
+        else if (Meathead.Instance != null && Combover.Instance)
+            EndAnimator.SetTrigger("Rise");
     }
 
     private void Start()
@@ -77,7 +82,6 @@ public class GameManager : MonoBehaviour
             {
                 MoneyCounter.text = prefix + Money;
             }
-            EndAnimator.SetTrigger("Rise");
         }
         Money = 0;
     }
@@ -175,7 +179,8 @@ public class GameManager : MonoBehaviour
         else if(Level < 5)
         {
             Level++;
-            PlayerPrefs.SetInt("Level", Level);
+            if (Level > PlayerPrefs.GetInt("Level"))
+                PlayerPrefs.SetInt("Level", Level);
             SceneManager.LoadScene(Level);
         }
         else

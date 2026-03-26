@@ -79,7 +79,7 @@ public class NPC : MonoBehaviour
         CorpseRadius = transform.GetChild(2).GetComponent<SphereCollider>();
         DeathCall = transform.GetChild(1).GetComponent<SphereCollider>();
         Splatter = GetComponentInChildren<ParticleSystem>();
-        Escape = GameObject.Find("Exit").transform.position;
+        Escape = GameObject.Find("Escape").transform.position;
 
         Rooms = GameObject.Find("Locales").GetComponentsInChildren<Room>();
         MyRoom = Rooms[Random.Range(0,Rooms.Length)];

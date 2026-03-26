@@ -32,6 +32,16 @@ public class PauseManager : MonoBehaviour
         {
             button.interactable = false;
         }
+        if (Meathead.Instance != null)
+        {
+            Meathead.Instance.Animator.SetBool("Walking", false);
+            Meathead.Instance.enabled = true;
+        }
+        if (Combover.Instance != null)
+        {
+            Combover.Instance.Animator.SetBool("Walking", false);
+            Combover.Instance.enabled = true;
+        }
     }
 
     private void Update()
@@ -105,6 +115,11 @@ public class PauseManager : MonoBehaviour
         {
             button.interactable = false;
         }
+    }
+
+    public void Reset()
+    {
+        SceneManager.LoadScene(GameManager.Level);
     }
 
     public void Options()
