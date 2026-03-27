@@ -35,7 +35,6 @@ public class Combover : Player
         this.enabled = false;
     }
 
-    
     public new void OnMove(InputValue value)
     {
         if (!IsVenting)
@@ -82,6 +81,11 @@ public class Combover : Player
             }
         }
         
+    }
+
+    protected override SpriteRenderer GetNPCRenderer(NPC npc)
+    {
+        return npc.COSpriteRenderer;
     }
 
     public new void OnWest(InputValue value)

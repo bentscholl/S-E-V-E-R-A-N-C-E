@@ -13,7 +13,8 @@ public class NPC : MonoBehaviour
 {
     NavMeshAgent Agent;
 
-    public SpriteRenderer SpriteRenderer;
+    public SpriteRenderer MHSpriteRenderer;
+    public SpriteRenderer COSpriteRenderer;
     public SortingGroup SortingGroup;
     Transform SpriteTransform;
     [HideInInspector]
@@ -70,7 +71,8 @@ public class NPC : MonoBehaviour
         //SpriteAtlas Atlas = (SpriteAtlas)Resources.Load("SpriteAtlas/NPC" + Random.Range(1, 3));
         //Atlas.GetSprites(Sprites);
         Sprites = Resources.LoadAll<Sprite>("NPCs/NPC"+Random.Range(1,16));
-        SpriteRenderer = transform.GetChild(0).GetChild(1).GetComponent<SpriteRenderer>();
+        COSpriteRenderer = transform.GetChild(0).GetChild(1).GetComponent<SpriteRenderer>();
+        MHSpriteRenderer = transform.GetChild(0).GetChild(2).GetComponent<SpriteRenderer>();
         SortingGroup = GetComponent<SortingGroup>();
         Agent = GetComponent<NavMeshAgent>();
         Behavior = FiniteState.Idle;
@@ -111,9 +113,13 @@ public class NPC : MonoBehaviour
         try
         {
             if (IsRelocated)
-                SpriteRenderer.enabled = true;
+            {
+                COSpriteRenderer.enabled = true;
+                MHSpriteRenderer.enabled = true;
+            }
 
-            SpriteRenderer.sprite = Sprites[SpriteIndex];
+            COSpriteRenderer.sprite = Sprites[SpriteIndex];
+            MHSpriteRenderer.sprite = COSpriteRenderer.sprite;
 
             if (!IsDead)
             {
@@ -328,7 +334,6 @@ public class NPC : MonoBehaviour
         GameManager.Money += 35000;
         Splatter.Play();
         GameManager.AudioSource.PlayOneShot(GameManager.Die);
-        name = "Corpse";
         yield return new WaitForSeconds(.3f);
         NPCsKilled++;
         DeathCall.enabled = true;
@@ -336,6 +341,8 @@ public class NPC : MonoBehaviour
         RecentDeath = false;
         yield return new WaitForSeconds(.2f);
         DeathCall.enabled = false;
+        yield return new WaitForSeconds(.3f);
+        name = "Corpse";
     }
 
     private void OnTriggerEnter(Collider other)

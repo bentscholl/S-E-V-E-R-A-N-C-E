@@ -15,6 +15,7 @@ public class Meathead : Player
 
     AudioClip PickUp;
     AudioClip PutDown;
+    Material CorpseHighlight;
 
     public new void Start()
     {
@@ -30,12 +31,33 @@ public class Meathead : Player
         PutDown = Resources.Load<AudioClip>("SFX/PutDown");
     }
 
-    private void FixedUpdate()
+    private new void FixedUpdate()
     {
+        base.FixedUpdate();
         if (IsCarrying)
         {
-            Corpse.SpriteRenderer.flipX = FacingRight;
+            Corpse.FlipRight = FacingRight;
         }
+        RaycastHit hit;
+        Physics.Raycast(transform.position, -SpriteTransform.right, out hit, 1);
+        if (!IsCarrying && IsKiller && hit.collider && hit.collider.name.Contains("Corpse"))
+        {
+            Material newMat = hit.collider.GetComponent<NPC>().MHSpriteRenderer.material;
+            if (CorpseHighlight != null && CorpseHighlight != newMat)
+                CorpseHighlight.SetInt("_Highlight", 0);
+            CorpseHighlight = newMat;
+            CorpseHighlight.SetInt("_Highlight", 1);
+        }
+        else if(CorpseHighlight != null)
+        {
+            CorpseHighlight.SetInt("_Highlight", 0);
+            CorpseHighlight = null;
+        }
+    }
+
+    protected override SpriteRenderer GetNPCRenderer(NPC npc)
+    {
+        return npc.MHSpriteRenderer;
     }
 
     public new void OnWest(InputValue value)
@@ -65,6 +87,12 @@ public class Meathead : Player
                 IsCarrying = true;
                 Hands.SetActive(true);
                 Animator.SetBool("Carry", true);
+
+                if (CorpseHighlight != null)
+                {
+                    CorpseHighlight.SetInt("_Highlight", 0);
+                    CorpseHighlight = null;
+                }
             }
         }
         else if(IsCarrying)
@@ -72,7 +100,8 @@ public class Meathead : Player
             GameManager.AudioSource.PlayOneShot(PickUp);
             CarriedTransform.GetComponent<NPC>().IsRelocated = true;
             CarriedTransform.localPosition = new Vector3(-SpriteTransform.right.x * .2f, 0, -.05f);
-            Corpse.SpriteRenderer.enabled = false;
+            Corpse.COSpriteRenderer.enabled = false;
+            Corpse.MHSpriteRenderer.enabled = false;
             Corpse.SortingGroup.enabled = true;
             CarriedTransform.parent = null;
             Corpse = null;

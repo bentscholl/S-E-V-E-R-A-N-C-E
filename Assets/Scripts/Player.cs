@@ -8,7 +8,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using static UnityEngine.InputSystem.InputAction;
 
-public class Player : MonoBehaviour
+public abstract class Player : MonoBehaviour
 {
     protected bool FacingRight;
     public Vector2 MovementVector;
@@ -40,6 +40,7 @@ public class Player : MonoBehaviour
     protected Vector3 StartOffset;
 
     public NPC FollowingNPC;
+    public Material NPCHighlight;
 
     // Start is called before the first frame update
     protected void Start()
@@ -81,9 +82,37 @@ public class Player : MonoBehaviour
         } 
     }
 
-    private void FixedUpdate()
+    protected void FixedUpdate()
     {
+        if (FollowingNPC == null && !IsKiller)
+        {
+            RaycastHit hit;
+            Physics.Raycast(transform.position, -SpriteTransform.right, out hit, 1);
+            bool seenNPC = false;
+
+            if (hit.collider != null && hit.collider.GetComponent<NPC>() != null)
+            {
+                NPC npc = hit.collider.GetComponent<NPC>();
+                if (npc != null && !npc.IsDead)
+                {
+                    seenNPC = true;
+                    SpriteRenderer renderer = GetNPCRenderer(npc);
+                    if(NPCHighlight != renderer.GetComponent<Renderer>().material)
+                        NPCHighlight.SetInt("_Highlight", 0);
+                    NPCHighlight = renderer.GetComponent<Renderer>().material;
+                    NPCHighlight.SetInt("_Highlight", 1);
+                }
+            }
+            
+            if(NPCHighlight != null && !seenNPC)
+            {
+                NPCHighlight.SetInt("_Highlight", 0);
+                NPCHighlight = null;
+            }
+        }
     }
+
+    protected abstract SpriteRenderer GetNPCRenderer(NPC npc);
 
     public void NewLevel()
     {
