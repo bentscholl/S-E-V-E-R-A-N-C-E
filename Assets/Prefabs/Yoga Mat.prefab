@@ -1,0 +1,337 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &136304965812943144
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8411631192782060228}
+  m_Layer: 0
+  m_Name: Yoga Mat
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8411631192782060228
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 136304965812943144}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 3002806936836979149}
+  - {fileID: 2205915435280108388}
+  - {fileID: 5238043790234700293}
+  - {fileID: 8554597469244931350}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1189123008205511051
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 8411631192782060228}
+    m_Modifications:
+    - target: {fileID: -4920733497362191264, guid: d0b94a8f99a2a6a49a2c0f32a3e6ad34,
+        type: 3}
+      propertyPath: m_Name
+      value: Yoga Mat Green
+      objectReference: {fileID: 0}
+    - target: {fileID: 1016794774343602927, guid: d0b94a8f99a2a6a49a2c0f32a3e6ad34,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.198
+      objectReference: {fileID: 0}
+    - target: {fileID: 1016794774343602927, guid: d0b94a8f99a2a6a49a2c0f32a3e6ad34,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1016794774343602927, guid: d0b94a8f99a2a6a49a2c0f32a3e6ad34,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -2.588
+      objectReference: {fileID: 0}
+    - target: {fileID: 1016794774343602927, guid: d0b94a8f99a2a6a49a2c0f32a3e6ad34,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1016794774343602927, guid: d0b94a8f99a2a6a49a2c0f32a3e6ad34,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1016794774343602927, guid: d0b94a8f99a2a6a49a2c0f32a3e6ad34,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1016794774343602927, guid: d0b94a8f99a2a6a49a2c0f32a3e6ad34,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1016794774343602927, guid: d0b94a8f99a2a6a49a2c0f32a3e6ad34,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1016794774343602927, guid: d0b94a8f99a2a6a49a2c0f32a3e6ad34,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1016794774343602927, guid: d0b94a8f99a2a6a49a2c0f32a3e6ad34,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 8686905464242370237, guid: d0b94a8f99a2a6a49a2c0f32a3e6ad34,
+    type: 3}
+--- !u!4 &2205915435280108388 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1016794774343602927, guid: d0b94a8f99a2a6a49a2c0f32a3e6ad34,
+    type: 3}
+  m_PrefabInstance: {fileID: 1189123008205511051}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &2859923795459074850
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 8411631192782060228}
+    m_Modifications:
+    - target: {fileID: -4920733497362191264, guid: 3a6d269236bfeb64a812d8450cc7786d,
+        type: 3}
+      propertyPath: m_Name
+      value: Yoga Mat Blue
+      objectReference: {fileID: 0}
+    - target: {fileID: 1016794774343602927, guid: 3a6d269236bfeb64a812d8450cc7786d,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.9687842
+      objectReference: {fileID: 0}
+    - target: {fileID: 1016794774343602927, guid: 3a6d269236bfeb64a812d8450cc7786d,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1016794774343602927, guid: 3a6d269236bfeb64a812d8450cc7786d,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -2.8332942
+      objectReference: {fileID: 0}
+    - target: {fileID: 1016794774343602927, guid: 3a6d269236bfeb64a812d8450cc7786d,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1016794774343602927, guid: 3a6d269236bfeb64a812d8450cc7786d,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1016794774343602927, guid: 3a6d269236bfeb64a812d8450cc7786d,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1016794774343602927, guid: 3a6d269236bfeb64a812d8450cc7786d,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1016794774343602927, guid: 3a6d269236bfeb64a812d8450cc7786d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1016794774343602927, guid: 3a6d269236bfeb64a812d8450cc7786d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1016794774343602927, guid: 3a6d269236bfeb64a812d8450cc7786d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 8686905464242370237, guid: 3a6d269236bfeb64a812d8450cc7786d,
+    type: 3}
+--- !u!4 &3002806936836979149 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1016794774343602927, guid: 3a6d269236bfeb64a812d8450cc7786d,
+    type: 3}
+  m_PrefabInstance: {fileID: 2859923795459074850}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &5092766778104748266
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 8411631192782060228}
+    m_Modifications:
+    - target: {fileID: -4920733497362191264, guid: 9abb6110487ad9b44a2ef4cf88fc6f3f,
+        type: 3}
+      propertyPath: m_Name
+      value: Yoga Mat Pink
+      objectReference: {fileID: 0}
+    - target: {fileID: 1016794774343602927, guid: 9abb6110487ad9b44a2ef4cf88fc6f3f,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.9530685
+      objectReference: {fileID: 0}
+    - target: {fileID: 1016794774343602927, guid: 9abb6110487ad9b44a2ef4cf88fc6f3f,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1016794774343602927, guid: 9abb6110487ad9b44a2ef4cf88fc6f3f,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -3.7898328
+      objectReference: {fileID: 0}
+    - target: {fileID: 1016794774343602927, guid: 9abb6110487ad9b44a2ef4cf88fc6f3f,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1016794774343602927, guid: 9abb6110487ad9b44a2ef4cf88fc6f3f,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1016794774343602927, guid: 9abb6110487ad9b44a2ef4cf88fc6f3f,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1016794774343602927, guid: 9abb6110487ad9b44a2ef4cf88fc6f3f,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1016794774343602927, guid: 9abb6110487ad9b44a2ef4cf88fc6f3f,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1016794774343602927, guid: 9abb6110487ad9b44a2ef4cf88fc6f3f,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1016794774343602927, guid: 9abb6110487ad9b44a2ef4cf88fc6f3f,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 8686905464242370237, guid: 9abb6110487ad9b44a2ef4cf88fc6f3f,
+    type: 3}
+--- !u!4 &5238043790234700293 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1016794774343602927, guid: 9abb6110487ad9b44a2ef4cf88fc6f3f,
+    type: 3}
+  m_PrefabInstance: {fileID: 5092766778104748266}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &8693187973144244217
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 8411631192782060228}
+    m_Modifications:
+    - target: {fileID: -4920733497362191264, guid: 9b5f22cb11968164fab13aca39140414,
+        type: 3}
+      propertyPath: m_Name
+      value: Yoga Mat Purple
+      objectReference: {fileID: 0}
+    - target: {fileID: 1016794774343602927, guid: 9b5f22cb11968164fab13aca39140414,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.23869598
+      objectReference: {fileID: 0}
+    - target: {fileID: 1016794774343602927, guid: 9b5f22cb11968164fab13aca39140414,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1016794774343602927, guid: 9b5f22cb11968164fab13aca39140414,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -3.588
+      objectReference: {fileID: 0}
+    - target: {fileID: 1016794774343602927, guid: 9b5f22cb11968164fab13aca39140414,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1016794774343602927, guid: 9b5f22cb11968164fab13aca39140414,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1016794774343602927, guid: 9b5f22cb11968164fab13aca39140414,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1016794774343602927, guid: 9b5f22cb11968164fab13aca39140414,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1016794774343602927, guid: 9b5f22cb11968164fab13aca39140414,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1016794774343602927, guid: 9b5f22cb11968164fab13aca39140414,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1016794774343602927, guid: 9b5f22cb11968164fab13aca39140414,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 8686905464242370237, guid: 9b5f22cb11968164fab13aca39140414,
+    type: 3}
+--- !u!4 &8554597469244931350 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1016794774343602927, guid: 9b5f22cb11968164fab13aca39140414,
+    type: 3}
+  m_PrefabInstance: {fileID: 8693187973144244217}
+  m_PrefabAsset: {fileID: 0}
