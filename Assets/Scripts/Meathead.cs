@@ -39,13 +39,14 @@ public class Meathead : Player
             Corpse.FlipRight = FacingRight;
         }
         RaycastHit hit;
-        Physics.Raycast(transform.position, -SpriteTransform.right, out hit, 1);
+        Physics.Raycast(transform.position, -SpriteTransform.right, out hit, 1f, RaycastMask | LayerMask.NameToLayer("Dead"));
         if (!IsCarrying && IsKiller && hit.collider && hit.collider.name.Contains("Corpse"))
         {
             Material newMat = hit.collider.GetComponent<NPC>().MHSpriteRenderer.material;
             if (CorpseHighlight != null && CorpseHighlight != newMat)
                 CorpseHighlight.SetInt("_Highlight", 0);
             CorpseHighlight = newMat;
+            CorpseHighlight.SetColor("_Color", Color.yellow);
             CorpseHighlight.SetInt("_Highlight", 1);
         }
         else if(CorpseHighlight != null)
@@ -74,7 +75,7 @@ public class Meathead : Player
         if (!IsCarrying && IsKiller && enabled)
         {
             RaycastHit hit;
-            Physics.Raycast(transform.position, -SpriteTransform.right, out hit, 1);
+            Physics.Raycast(transform.position, -SpriteTransform.right, out hit, 1, RaycastMask | LayerMask.NameToLayer("Dead"));
             if (hit.collider && hit.collider.name.Contains("Corpse"))
             {
                 GameManager.AudioSource.PlayOneShot(PickUp);

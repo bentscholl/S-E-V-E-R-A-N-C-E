@@ -283,8 +283,12 @@ MonoBehaviour:
   SwapOnCooldown: 0
   IsKiller: 0
   Animator: {fileID: 0}
+  AudioSource: {fileID: 0}
   FollowingNPC: {fileID: 0}
   NPCHighlight: {fileID: 0}
+  RaycastMask:
+    serializedVersion: 2
+    m_Bits: 2240
 --- !u!195 &3183506155082161892
 NavMeshAgent:
   m_ObjectHideFlags: 0

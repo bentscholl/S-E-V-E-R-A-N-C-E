@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
@@ -28,12 +29,13 @@ public class GameManager : MonoBehaviour
 
     public bool GameStarted;
     bool GameOver;
-    int StartingTotal;
+    public int StartingTotal;
     public static int Money = 0;
 
     public static int Level;
     void Awake()
     {
+        StopAllCoroutines();
         Level = SceneManager.GetActiveScene().buildIndex;
         Total = GameObject.Find("Total").GetComponentInChildren<TextMeshProUGUI>();
         Kills = GameObject.Find("Kills").GetComponentInChildren<TextMeshProUGUI>();
@@ -45,6 +47,7 @@ public class GameManager : MonoBehaviour
         MoneyCounter = GameObject.Find("Money").GetComponent<TextMeshProUGUI>();
 
         AudioSource = gameObject.AddComponent<AudioSource>();
+        AudioSource.outputAudioMixerGroup = Resources.Load<AudioMixer>("AudioMixer").FindMatchingGroups("Master")[0];
         Countdown = Resources.Load<AudioClip>("SFX/Countdown");
         PlayerJoin = Resources.Load<AudioClip>("SFX/Join");
         Fall = Resources.Load<AudioClip>("SFX/Fall");
@@ -58,13 +61,18 @@ public class GameManager : MonoBehaviour
 
         if (PauseManager.IsPaused)
             PauseManager.IsPaused = false;
-        else if (Meathead.Instance != null && Combover.Instance)
+        else if (Meathead.Instance != null && Combover.Instance != null)
             EndAnimator.SetTrigger("Rise");
+
+        if(PlayerController.ComboverController != null && PlayerController.MeatheadController == null)
+        {
+            Destroy(PlayerController.ComboverController.gameObject);
+        }
+        Instance = this;
     }
 
     private void Start()
     {
-        Instance = this;
         if (PlayerController.ComboverController != null && PlayerController.MeatheadController != null)
         {
             Meathead.Instance.NewLevel();
@@ -108,6 +116,7 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator StartGame()
     {
+        PauseManager.Pauseable = false;
         GameObject StartPanel = GameObject.Find("StartPanel");
         TextMeshProUGUI StartText = StartPanel.GetComponentInChildren<TextMeshProUGUI>();
         Animator animator = GameObject.Find("Mask").GetComponent<Animator>();
@@ -139,6 +148,7 @@ public class GameManager : MonoBehaviour
         StartPanel.GetComponent<Animator>().SetTrigger("Start");
         Meathead.Instance.enabled = true;
         Combover.Instance.enabled = true;
+        PauseManager.Pauseable = true;
     }
 
     IEnumerator EndGame()

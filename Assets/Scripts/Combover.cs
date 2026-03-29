@@ -12,6 +12,7 @@ public class Combover : Player
     bool VentMoveReset;
     bool LastVentMoveRight;
     Vent Vent;
+    Material VentMat;
     int VentIndex;
     public GameObject Sprite;
     BoxCollider BoxCollider;
@@ -81,6 +82,30 @@ public class Combover : Player
             }
         }
         
+    }
+
+    private new void FixedUpdate()
+    {
+        base.FixedUpdate();
+        bool VentSpotted = false;
+        if (IsKiller && !IsVenting)
+        {
+            RaycastHit hit;
+            Physics.Raycast(transform.position, -SpriteTransform.right, out hit, 1);
+            if (hit.collider && hit.collider.name.Contains("Vent"))
+            {
+                VentSpotted = true;
+                Vent Vent = hit.collider.GetComponent<Vent>();
+                VentMat = Vent.Material;
+                VentMat.color = Color.yellow;
+            }
+        }
+
+        if(VentMat != null && !VentSpotted)
+        {
+            VentMat.color = Color.white;
+            VentMat = null;
+        }
     }
 
     protected override SpriteRenderer GetNPCRenderer(NPC npc)

@@ -11,24 +11,27 @@ public class PauseManager : MonoBehaviour
     public static PauseManager Instance;
     public static bool IsPaused = false;
     public static bool Pauseable;
-    Button[] Buttons;
-    EventSystem EventSystem;
-    GameObject PauseMenu;
+    Button[] PauseButtons;
+    Animator OptionsMenu;
+    GameObject OptionsBackButton;
     GameObject ResumeButton;
     Animator Animator;
+    PlayerInputManager PlayerInputManager;
     // Start is called before the first frame update
     void Start()
     {
+        PlayerInputManager = FindObjectOfType<PlayerInputManager>();
         Pauseable = true;
         Instance = this;
-        EventSystem = FindObjectOfType<EventSystem>();
-        PauseMenu = GameObject.Find("PauseHandbook");
+        OptionsMenu = GameObject.Find("Settings").GetComponent<Animator>();
+        OptionsBackButton = GameObject.Find("BackButton");
         ResumeButton = GameObject.Find("Resume");
+        EventSystem.current.firstSelectedGameObject = ResumeButton;
         IsPaused = false;
         Animator = GetComponent<Animator>();
         Time.timeScale = 1;
-        Buttons = GameObject.Find("Back").GetComponentsInChildren<Button>();
-        foreach (var button in Buttons)
+        PauseButtons = GameObject.Find("Back").GetComponentsInChildren<Button>();
+        foreach (var button in PauseButtons)
         {
             button.interactable = false;
         }
@@ -50,11 +53,11 @@ public class PauseManager : MonoBehaviour
         {
             PauseButton();
         }
-        if ((Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0) && EventSystem.currentSelectedGameObject == null)
+        if ((Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0) && EventSystem.current.currentSelectedGameObject == null)
         {
-            EventSystem.SetSelectedGameObject(ResumeButton);
+            EventSystem.current.SetSelectedGameObject(EventSystem.current.firstSelectedGameObject);
         }
-
+        //print(EventSystem.current.currentSelectedGameObject);
     }
 
     public void OnNavigate()
@@ -82,12 +85,13 @@ public class PauseManager : MonoBehaviour
             {
                 Combover.Instance.enabled = false;
             }
+            PlayerInputManager.DisableJoining();
             Time.timeScale = 0;
-            EventSystem.SetSelectedGameObject(ResumeButton);
+            EventSystem.current.SetSelectedGameObject(ResumeButton);
             IsPaused = true;
             Animator.SetBool("Paused", true);
 
-            foreach (var button in Buttons)
+            foreach (var button in PauseButtons)
             {
                 button.interactable = true;
             }
@@ -106,12 +110,13 @@ public class PauseManager : MonoBehaviour
             Combover.Instance.Animator.SetBool("Walking", false);
             Combover.Instance.enabled = true;
         }
+        PlayerInputManager.EnableJoining();
         Time.timeScale = 1;
-        EventSystem.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(null);
         IsPaused = false;
         Animator.SetBool("Paused", false);
 
-        foreach (var button in Buttons)
+        foreach (var button in PauseButtons)
         {
             button.interactable = false;
         }
@@ -124,7 +129,24 @@ public class PauseManager : MonoBehaviour
 
     public void Options()
     {
-        print("Not Implemented");
+        OptionsMenu.SetBool("Toggle", true);
+        EventSystem.current.firstSelectedGameObject = OptionsBackButton;
+        EventSystem.current.SetSelectedGameObject(OptionsBackButton);
+        foreach (var button in PauseButtons)
+        {
+            button.interactable = false;
+        }
+    }
+
+    public void OptionsBack()
+    {
+        OptionsMenu.SetBool("Toggle", false);
+        EventSystem.current.firstSelectedGameObject = ResumeButton;
+        EventSystem.current.SetSelectedGameObject(ResumeButton);
+        foreach (var button in PauseButtons)
+        {
+            button.interactable = true;
+        }
     }
 
     public void Quit()

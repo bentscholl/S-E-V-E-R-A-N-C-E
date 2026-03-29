@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4620062295472741273}
+  - component: {fileID: 7463769204307873589}
   m_Layer: 0
   m_Name: Rock Wall
   m_TagString: Untagged
@@ -32,6 +33,27 @@ Transform:
   - {fileID: 2520486857474610590}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &7463769204307873589
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 331872721318865031}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.039093, y: 4.6246085, z: 4.499914}
+  m_Center: {x: 0.5195467, y: 1.8123043, z: -0.07591057}
 --- !u!1001 &2697700209444385397
 PrefabInstance:
   m_ObjectHideFlags: 0

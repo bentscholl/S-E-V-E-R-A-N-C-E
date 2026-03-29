@@ -20,7 +20,7 @@ public class NPC : MonoBehaviour
     [HideInInspector]
     public bool FlipRight;
     Animator Animator;
-    Sprite[] Sprites;
+    protected Sprite[] Sprites;
     public int SpriteIndex;
 
     public bool IsDead;
@@ -311,16 +311,23 @@ public class NPC : MonoBehaviour
 
     public void Stab()
     {
-        IsDead = true;
-        Agent.enabled = false;
-        gameObject.layer = LayerMask.NameToLayer("Dead");
-        Animator.SetTrigger("Kill");
-        Brows.gameObject.SetActive(false);
-        if(FollowedPlayer != null)
+        if (!IsDead)
         {
-            FollowedPlayer.GetComponent<Player>().FollowingNPC = null;
-        }    
-        StartCoroutine(Die());
+            IsDead = true;
+            Agent.enabled = false;
+            gameObject.layer = LayerMask.NameToLayer("Dead");
+            Animator.SetTrigger("Kill");
+            Brows.gameObject.SetActive(false);
+            if (FollowedPlayer != null)
+            {
+                FollowedPlayer.GetComponent<Player>().FollowingNPC = null;
+            }
+            MyRoom.Residents--;
+            GameManager.Money += 35000;
+            Splatter.Play();
+            GameManager.AudioSource.PlayOneShot(GameManager.Die);
+            StartCoroutine(Die());
+        }
     }
 
     private void SetDespawnable()
@@ -330,10 +337,6 @@ public class NPC : MonoBehaviour
 
     public IEnumerator Die()
     {
-        MyRoom.Residents--;
-        GameManager.Money += 35000;
-        Splatter.Play();
-        GameManager.AudioSource.PlayOneShot(GameManager.Die);
         yield return new WaitForSeconds(.3f);
         NPCsKilled++;
         DeathCall.enabled = true;
@@ -358,11 +361,6 @@ public class NPC : MonoBehaviour
                     SuspiciousBrow.SetActive(true);
                 }
 
-            }
-            if (other.name.Contains("Stab") && !RecentDeath)
-            {
-                RecentDeath = true;
-                Stab();
             }
         }
 

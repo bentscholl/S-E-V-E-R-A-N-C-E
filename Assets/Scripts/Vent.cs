@@ -11,6 +11,7 @@ public class Vent : MonoBehaviour
     public float ZAngle;
     public Animator Animator;
     public SpriteRenderer[] Arrows;
+    public Material Material;
     // Start is called before the first frame update
     void Start()
     {
@@ -34,6 +35,7 @@ public class Vent : MonoBehaviour
         }
         ToggleArrows(false);
         Animator = GetComponent<Animator>();
+        Material = transform.GetChild(2).GetComponentInChildren<Renderer>().material;
     }
 
     // Update is called once per frame

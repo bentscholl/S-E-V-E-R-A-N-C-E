@@ -4,6 +4,7 @@ using TMPro;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Audio;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using static UnityEngine.InputSystem.InputAction;
@@ -35,12 +36,14 @@ public abstract class Player : MonoBehaviour
     AudioClip InteractFX;
     AudioClip PoofFX;
 
-    AudioSource AudioSource;
+    public AudioSource AudioSource;
 
     protected Vector3 StartOffset;
 
     public NPC FollowingNPC;
     public Material NPCHighlight;
+
+    public LayerMask RaycastMask;
 
     // Start is called before the first frame update
     protected void Start()
@@ -57,6 +60,7 @@ public abstract class Player : MonoBehaviour
         StabReady = true;
 
         AudioSource = gameObject.AddComponent<AudioSource>();
+        AudioSource.outputAudioMixerGroup = Resources.Load<AudioMixer>("AudioMixer").FindMatchingGroups("Master")[0];
         StabFX = Resources.Load<AudioClip>("SFX/Knife");
         PoofFX = Resources.Load<AudioClip>("SFX/Poof");
         NewLevel();
@@ -84,10 +88,10 @@ public abstract class Player : MonoBehaviour
 
     protected void FixedUpdate()
     {
-        if (FollowingNPC == null && !IsKiller)
+        if (FollowingNPC == null)
         {
             RaycastHit hit;
-            Physics.Raycast(transform.position, -SpriteTransform.right, out hit, 1);
+            Physics.Raycast(transform.position, -SpriteTransform.right, out hit, 1.5f, RaycastMask);
             bool seenNPC = false;
 
             if (hit.collider != null && hit.collider.GetComponent<NPC>() != null)
@@ -97,14 +101,23 @@ public abstract class Player : MonoBehaviour
                 {
                     seenNPC = true;
                     SpriteRenderer renderer = GetNPCRenderer(npc);
-                    if(NPCHighlight != renderer.GetComponent<Renderer>().material)
+                    if (NPCHighlight != null && NPCHighlight != renderer.GetComponent<Renderer>().material)
                         NPCHighlight.SetInt("_Highlight", 0);
+
                     NPCHighlight = renderer.GetComponent<Renderer>().material;
+                    if (!IsKiller)
+                    {
+                        NPCHighlight.SetColor("_Color", Color.yellow);
+                    }
+                    else if (IsKiller && StabReady && !npc.IsDead)
+                    {
+                        NPCHighlight.SetColor("_Color", Color.red);
+                    }
                     NPCHighlight.SetInt("_Highlight", 1);
                 }
             }
-            
-            if(NPCHighlight != null && !seenNPC)
+
+            if (NPCHighlight != null && !seenNPC)
             {
                 NPCHighlight.SetInt("_Highlight", 0);
                 NPCHighlight = null;
@@ -140,7 +153,10 @@ public abstract class Player : MonoBehaviour
     public void OnPause()
     {
         MovementVector = Vector2.zero;
-        OtherPlayer.MovementVector = Vector2.zero;
+        if (OtherPlayer != null)
+        {
+            OtherPlayer.MovementVector = Vector2.zero;
+        }
         PauseManager.Instance.PauseButton();
     }
 
@@ -172,7 +188,7 @@ public abstract class Player : MonoBehaviour
             if (FollowingNPC == null)
             {
                 RaycastHit hit;
-                Physics.Raycast(transform.position, -SpriteTransform.right, out hit, 1);
+                Physics.Raycast(transform.position, -SpriteTransform.right, out hit, 1, RaycastMask);
                 if (hit.collider)
                 {
                     NPC npc = hit.collider.GetComponent<NPC>();
@@ -195,11 +211,14 @@ public abstract class Player : MonoBehaviour
     {
         StabReady = false;
         Stabbing = true;
-        StabCollider.enabled = true;
+        RaycastHit hit;
+        Physics.Raycast(transform.position, -SpriteTransform.right, out hit, 1.5f, RaycastMask);
+        if(hit.collider != null &&  hit.collider.GetComponent<NPC>() != null)
+        {
+            hit.collider.GetComponent<NPC>().Stab();
+        }
         AudioSource.PlayOneShot(StabFX);
-        yield return new WaitForSeconds(.2f);
-        StabCollider.enabled = false;
-        yield return new WaitForSeconds(.4f);
+        yield return new WaitForSeconds(.6f);
         Stabbing = false;
         yield return new WaitForSeconds(1f);
         StabReady = true;
