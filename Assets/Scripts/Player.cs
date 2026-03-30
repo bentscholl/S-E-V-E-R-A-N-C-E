@@ -51,8 +51,6 @@ public abstract class Player : MonoBehaviour
         input = GetComponent<PlayerInput>();
         MovementVector = Vector2.zero;
         SpriteTransform = GetComponentInChildren<SpriteRenderer>().transform;
-        StabCollider = transform.GetChild(1).GetComponentInChildren<BoxCollider>();
-        StabCollider.enabled = false;
         Animator = GetComponent<Animator>();
         ParticleSystem = GetComponent<ParticleSystem>();
         MeshAgent = GetComponent<NavMeshAgent>();
@@ -105,15 +103,16 @@ public abstract class Player : MonoBehaviour
                         NPCHighlight.SetInt("_Highlight", 0);
 
                     NPCHighlight = renderer.GetComponent<Renderer>().material;
-                    if (!IsKiller)
+                    if (!IsKiller && npc.Behavior != NPC.FiniteState.Escape)
                     {
                         NPCHighlight.SetColor("_Color", Color.yellow);
+                        NPCHighlight.SetInt("_Highlight", 1);
                     }
                     else if (IsKiller && StabReady && !npc.IsDead)
                     {
                         NPCHighlight.SetColor("_Color", Color.red);
+                        NPCHighlight.SetInt("_Highlight", 1);
                     }
-                    NPCHighlight.SetInt("_Highlight", 1);
                 }
             }
 
@@ -259,6 +258,12 @@ public abstract class Player : MonoBehaviour
         {
             FollowingNPC.Dismiss();
             FollowingNPC = null;
+        }
+
+        if(OtherPlayer.FollowingNPC != null)
+        {
+            OtherPlayer.FollowingNPC.Dismiss();
+            OtherPlayer.FollowingNPC = null;
         }
     }
 

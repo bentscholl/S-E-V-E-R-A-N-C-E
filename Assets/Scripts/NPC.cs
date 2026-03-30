@@ -65,6 +65,8 @@ public class NPC : MonoBehaviour
     [SerializeField]
     private float Boredom;
 
+    Material SusIndicator;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -73,6 +75,7 @@ public class NPC : MonoBehaviour
         Sprites = Resources.LoadAll<Sprite>("NPCs/NPC"+Random.Range(1,16));
         COSpriteRenderer = transform.GetChild(0).GetChild(1).GetComponent<SpriteRenderer>();
         MHSpriteRenderer = transform.GetChild(0).GetChild(2).GetComponent<SpriteRenderer>();
+        SusIndicator = transform.GetChild(0).GetChild(3).GetComponent<SpriteRenderer>().material;
         SortingGroup = GetComponent<SortingGroup>();
         Agent = GetComponent<NavMeshAgent>();
         Behavior = FiniteState.Idle;
@@ -107,6 +110,7 @@ public class NPC : MonoBehaviour
         ScaredBrow = Brows.GetChild(1).gameObject;
         SuspiciousBrow.SetActive(false);
         ScaredBrow.SetActive(false);
+        Agent.updateRotation = false;
     }
     private void FixedUpdate()
     {
@@ -117,6 +121,11 @@ public class NPC : MonoBehaviour
                 COSpriteRenderer.enabled = true;
                 MHSpriteRenderer.enabled = true;
             }
+
+            if(Behavior != FiniteState.Escape && Behavior != FiniteState.Dead)
+                SusIndicator.SetFloat("_Fill", Suspicion / 100f);
+            else
+                SusIndicator.SetFloat("_Fill", 0);
 
             COSpriteRenderer.sprite = Sprites[SpriteIndex];
             MHSpriteRenderer.sprite = COSpriteRenderer.sprite;
@@ -134,11 +143,12 @@ public class NPC : MonoBehaviour
 
                 if (Suspicion >= 100 && Behavior != FiniteState.Escape)
                 {
+                    Dismiss();
+                    SusIndicator.SetFloat("_Fill", 0);
                     MyRoom.Residents--;
                     Invoke("SetDespawnable", 1);
                     Agent.destination = Escape;
                     print(Escape);
-                    FollowedPlayer = null;
                     Behavior = FiniteState.Escape;
                     SuspiciousBrow.SetActive(false);
                     ScaredBrow.SetActive(true);
@@ -230,7 +240,7 @@ public class NPC : MonoBehaviour
                  Brows.localPosition = new Vector3(0, 0, -Brows.forward.z * .01f);
 
                 //Check Surroundings
-                if (Player.KillerTransform != null)
+                if (Player.KillerTransform != null && Behavior != FiniteState.Escape)
                 {
                     float DistanceMeathead = Vector3.Distance(transform.position, Meathead.Instance.transform.position);
                     float DistanceCombover = Vector3.Distance(transform.position, Combover.Instance.transform.position);
@@ -326,6 +336,7 @@ public class NPC : MonoBehaviour
             GameManager.Money += 35000;
             Splatter.Play();
             GameManager.AudioSource.PlayOneShot(GameManager.Die);
+            Behavior = FiniteState.Dead;
             StartCoroutine(Die());
         }
     }

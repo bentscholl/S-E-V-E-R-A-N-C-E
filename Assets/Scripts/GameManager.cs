@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Audio;
@@ -16,6 +17,7 @@ public class GameManager : MonoBehaviour
     public static AudioClip Countdown;
     public static AudioClip Die;
     public static AudioClip Fall;
+    public static AudioClip Burn;
     public static AudioClip Leave;
 
     TextMeshProUGUI Total;
@@ -52,6 +54,7 @@ public class GameManager : MonoBehaviour
         PlayerJoin = Resources.Load<AudioClip>("SFX/Join");
         Fall = Resources.Load<AudioClip>("SFX/Fall");
         Die = Resources.Load<AudioClip>("SFX/Die");
+        Burn = Resources.Load<AudioClip>("SFX/Burn");
         Leave = Resources.Load<AudioClip>("SFX/Leave");
 
         NPC.NPCsEscaped = 0;
@@ -79,7 +82,7 @@ public class GameManager : MonoBehaviour
             Combover.Instance.NewLevel();
             GameObject StartPanel = GameObject.Find("StartPanel");
             StartPanel.GetComponent<Animator>().SetTrigger("Start");
-            StartPanel.GetComponent<Animator>().speed = 2;
+            StartPanel.GetComponent<Animator>().speed = 12;
             string prefix = "$";
             if (Money <= 0)
             {
@@ -111,7 +114,6 @@ public class GameManager : MonoBehaviour
         {
             StartCoroutine(EndGame());
         }
-        
     }
 
     public IEnumerator StartGame()
@@ -184,19 +186,19 @@ public class GameManager : MonoBehaviour
 
         if(Money < 0 )
         {
-            SceneManager.LoadScene(Level);
+            Transition.Instance.FadeToScene(Level);
         }
         else if(Level < 5)
         {
             Level++;
             if (Level > PlayerPrefs.GetInt("Level"))
                 PlayerPrefs.SetInt("Level", Level);
-            SceneManager.LoadScene(Level);
+            Transition.Instance.FadeToScene(Level);
         }
         else
         {
             //Change to credits scroll
-            SceneManager.LoadScene(0);
+            Transition.Instance.FadeToScene(0);
         }
     }
 }

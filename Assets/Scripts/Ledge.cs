@@ -2,33 +2,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Window : MonoBehaviour
+public class Ledge : MonoBehaviour
 {
     Material mat;
     Collider Meathead;
+    public Color Original;
     private void Start()
     {
-        mat = GetComponent<Renderer>().material;
+        mat = GetComponentInParent<Renderer>().material;
+        Original = mat.color;
     }
 
     private void FixedUpdate()
     {
         if (Meathead != null && !Meathead.enabled)
         {
-            mat.color = Color.white;
+            mat.color = Original;
         }
     }
     private void OnTriggerStay(Collider other)
     {
-        if(other.name.Equals("Corpse"))
+        if (other.name.Equals("Corpse"))
         {
-            if(other.GetComponent<NPC>().IsRelocated)
+            if (other.GetComponent<NPC>().IsRelocated)
             {
                 GameManager.AudioSource.PlayOneShot(GameManager.Fall);
                 Destroy(other.gameObject);
             }
         }
-        else if(other.name.Equals("WindowBox"))
+        else if (other.name.Equals("WindowBox"))
         {
             Meathead = (Collider)other;
             if (other.enabled)
@@ -40,7 +42,7 @@ public class Window : MonoBehaviour
     {
         if (other.name.Equals("WindowBox"))
         {
-            mat.color = Color.white;
+            mat.color = Original;
         }
     }
 }

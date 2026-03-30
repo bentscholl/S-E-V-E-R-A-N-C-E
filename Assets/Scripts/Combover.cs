@@ -86,7 +86,8 @@ public class Combover : Player
 
     private new void FixedUpdate()
     {
-        base.FixedUpdate();
+        if(!IsVenting)
+            base.FixedUpdate();
         bool VentSpotted = false;
         if (IsKiller && !IsVenting)
         {

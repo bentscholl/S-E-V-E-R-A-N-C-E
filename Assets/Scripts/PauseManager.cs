@@ -124,7 +124,7 @@ public class PauseManager : MonoBehaviour
 
     public void Reset()
     {
-        SceneManager.LoadScene(GameManager.Level);
+        Transition.Instance.FadeToScene(GameManager.Level);
     }
 
     public void Options()
@@ -152,6 +152,6 @@ public class PauseManager : MonoBehaviour
     public void Quit()
     {
         Time.timeScale = 1;
-        SceneManager.LoadScene(0);
+        Transition.Instance.FadeToScene(0);
     }
 }

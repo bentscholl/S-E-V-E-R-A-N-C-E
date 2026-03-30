@@ -17,11 +17,15 @@ public class Meathead : Player
     AudioClip PutDown;
     Material CorpseHighlight;
 
+    BoxCollider WindowCollider;
+
     public new void Start()
     {
         StartOffset = new Vector3(0, 1, .5f);
         base.Start();
         Instance = this;
+        WindowCollider = transform.GetChild(1).GetComponentInChildren<BoxCollider>();
+        WindowCollider.enabled = false;
         MovementSpeed = 2;
         OtherPlayer = FindAnyObjectByType<Combover>();
         OtherPlayer.OtherPlayer = this;
@@ -33,8 +37,9 @@ public class Meathead : Player
 
     private new void FixedUpdate()
     {
-        base.FixedUpdate();
-        if (IsCarrying)
+        if (!IsCarrying)
+            base.FixedUpdate();
+        else
         {
             Corpse.FlipRight = FacingRight;
         }
@@ -88,7 +93,7 @@ public class Meathead : Player
                 IsCarrying = true;
                 Hands.SetActive(true);
                 Animator.SetBool("Carry", true);
-
+                WindowCollider.enabled = true;
                 if (CorpseHighlight != null)
                 {
                     CorpseHighlight.SetInt("_Highlight", 0);
@@ -108,6 +113,7 @@ public class Meathead : Player
             Corpse = null;
             CarriedTransform = null;
             IsCarrying = false;
+            WindowCollider.enabled = false;
             Hands.SetActive(false);
             Animator.SetBool("Carry", false);
         }

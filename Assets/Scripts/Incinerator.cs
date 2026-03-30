@@ -2,13 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Window : MonoBehaviour
+public class Incinerator : MonoBehaviour
 {
     Material mat;
     Collider Meathead;
+    ParticleSystem ParticleSystem;
     private void Start()
     {
-        mat = GetComponent<Renderer>().material;
+        mat = GetComponentInParent<Renderer>().material;
+        ParticleSystem = GetComponentInChildren<ParticleSystem>();
     }
 
     private void FixedUpdate()
@@ -20,15 +22,16 @@ public class Window : MonoBehaviour
     }
     private void OnTriggerStay(Collider other)
     {
-        if(other.name.Equals("Corpse"))
+        if (other.name.Equals("Corpse"))
         {
-            if(other.GetComponent<NPC>().IsRelocated)
+            if (other.GetComponent<NPC>().IsRelocated)
             {
-                GameManager.AudioSource.PlayOneShot(GameManager.Fall);
+                GameManager.AudioSource.PlayOneShot(GameManager.Burn);
+                ParticleSystem.Play();
                 Destroy(other.gameObject);
             }
         }
-        else if(other.name.Equals("WindowBox"))
+        else if (other.name.Equals("WindowBox"))
         {
             Meathead = (Collider)other;
             if (other.enabled)

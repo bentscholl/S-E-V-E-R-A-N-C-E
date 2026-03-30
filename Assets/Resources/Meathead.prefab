@@ -181,7 +181,7 @@ GameObject:
   - component: {fileID: 585983056411048327}
   - component: {fileID: 4083250584350844196}
   m_Layer: 0
-  m_Name: StabBox
+  m_Name: WindowBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -221,8 +221,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.43579075, y: 0.45622557, z: 0.46}
-  m_Center: {x: -0.48395342, y: -0.03061391, z: 0}
+  m_Size: {x: 0.16469316, y: 0.45622557, z: 0.13999999}
+  m_Center: {x: -0.34840444, y: -0.03061391, z: 0}
 --- !u!1 &4329442206600927829
 GameObject:
   m_ObjectHideFlags: 0

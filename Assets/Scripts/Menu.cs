@@ -79,8 +79,14 @@ public class Menu : MonoBehaviour
 
     public void Load(int Level)
     {
+        if(PlayerPrefs.GetInt("Cutscene1Played") == 0)
+        {
+            PlayerPrefs.SetInt("Cutscene1Played", 1);
+            Transition.Instance.FadeToScene("Cutscene1");
+            return;
+        }
         GameManager.Level = Level;
-        SceneManager.LoadScene(Level);
+        Transition.Instance.FadeToScene(Level);
     }
 
     public void End()
@@ -97,6 +103,7 @@ public class Menu : MonoBehaviour
     public void Reset()
     {
         PlayerPrefs.SetInt("Level", 1);
+        PlayerPrefs.SetInt("Cutscene1Played", 0);
         Button[] Floors = GameObject.Find("Floors").GetComponentsInChildren<Button>();
 
         for (int i = 1; i < Floors.Length; i++)
