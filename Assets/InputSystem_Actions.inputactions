@@ -163,17 +163,6 @@
                 },
                 {
                     "name": "",
-                    "id": "3a50fe57-f0bf-4e6e-8877-15bc7892b867",
-                    "path": "<Keyboard>/z",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Keyboard&Mouse",
-                    "action": "South",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "4846f7dd-f0f8-4d73-bbf8-ef15ac14d525",
                     "path": "<Gamepad>/buttonEast",
                     "interactions": "",

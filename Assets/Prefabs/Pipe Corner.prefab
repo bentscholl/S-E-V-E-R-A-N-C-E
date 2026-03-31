@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 294080405293471760}
   - component: {fileID: 4869563192745949240}
+  - component: {fileID: 258137350901957516}
   m_Layer: 0
   m_Name: Pipe Corner
   m_TagString: Untagged
@@ -55,6 +56,27 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!65 &258137350901957516
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7541026972788239756}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.18863113, y: 0.6175343, z: 1}
+  m_Center: {x: 0.051990308, y: 0.19123292, z: -8.351296e-16}
 --- !u!1001 &4510297219215124635
 PrefabInstance:
   m_ObjectHideFlags: 0
