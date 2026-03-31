@@ -127,6 +127,9 @@ public class NPC : MonoBehaviour
             else
                 SusIndicator.SetFloat("_Fill", 0);
 
+            if (Behavior != FiniteState.Investigate)
+                SuspiciousBrow.SetActive(false);
+
             COSpriteRenderer.sprite = Sprites[SpriteIndex];
             MHSpriteRenderer.sprite = COSpriteRenderer.sprite;
 

@@ -103,7 +103,7 @@ public abstract class Player : MonoBehaviour
                         NPCHighlight.SetInt("_Highlight", 0);
 
                     NPCHighlight = renderer.GetComponent<Renderer>().material;
-                    if (!IsKiller && npc.Behavior != NPC.FiniteState.Escape)
+                    if (!IsKiller && npc.Behavior != NPC.FiniteState.Escape && npc.Behavior != NPC.FiniteState.Investigate)
                     {
                         NPCHighlight.SetColor("_Color", Color.yellow);
                         NPCHighlight.SetInt("_Highlight", 1);
