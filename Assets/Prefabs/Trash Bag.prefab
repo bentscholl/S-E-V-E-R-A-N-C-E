@@ -63,6 +63,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Trash Bag
       objectReference: {fileID: 0}
+    - target: {fileID: 4357118449180629203, guid: f86c6eb102c3a104a9722f1c2fba20b6,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
