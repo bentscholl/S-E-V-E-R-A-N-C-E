@@ -16,15 +16,6 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "West",
-                    "type": "Button",
-                    "id": "6c2ab1b8-8984-453a-af3d-a3c78ae1679a",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "South",
                     "type": "Button",
                     "id": "852140f2-7766-474d-8707-702459ba45f3",
@@ -34,9 +25,9 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "East",
+                    "name": "West",
                     "type": "Button",
-                    "id": "9b8c0152-19e3-4b37-a2cd-547f8f2031d7",
+                    "id": "6c2ab1b8-8984-453a-af3d-a3c78ae1679a",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -46,6 +37,15 @@
                     "name": "North",
                     "type": "Button",
                     "id": "85cf1ce2-ad55-470e-b572-7dd18ef82e58",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "East",
+                    "type": "Button",
+                    "id": "9b8c0152-19e3-4b37-a2cd-547f8f2031d7",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -69,6 +69,17 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0b8d3198-9a32-411c-923e-7349581f252c",
+                    "path": "<Joystick>/stick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -130,6 +141,17 @@
                 },
                 {
                     "name": "",
+                    "id": "8fdea805-56a1-42db-b23a-f6123b92c674",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "143bb1cd-cc10-4eca-a2f0-a3664166fe91",
                     "path": "<Gamepad>/buttonWest",
                     "interactions": "",
@@ -152,6 +174,17 @@
                 },
                 {
                     "name": "",
+                    "id": "52638c1b-a0d3-43dc-926b-a21396f2a4f6",
+                    "path": "<HID::DragonRise Inc.   Generic   USB  Joystick  >/button2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "West",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "b3f66d0b-7751-423f-908b-a11c5bd95930",
                     "path": "<Gamepad>/buttonSouth",
                     "interactions": "",
@@ -165,6 +198,17 @@
                     "name": "",
                     "id": "8e317e5b-4775-46e5-bfd9-33b412aa5e71",
                     "path": "<Keyboard>/z",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "South",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "935b5555-e037-4cae-a3a8-b2dbcd953447",
+                    "path": "<HID::DragonRise Inc.   Generic   USB  Joystick  >/trigger",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -196,6 +240,17 @@
                 },
                 {
                     "name": "",
+                    "id": "b5fb197a-ae14-4be3-b4d1-219214a6b5e9",
+                    "path": "<HID::DragonRise Inc.   Generic   USB  Joystick  >/button3",
+                    "interactions": "Press(behavior=2)",
+                    "processors": "",
+                    "groups": "",
+                    "action": "North",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "0bf8bc97-a1a8-4a3c-ba39-513f6f7ed900",
                     "path": "<Keyboard>/c",
                     "interactions": "Press(behavior=2)",
@@ -212,6 +267,17 @@
                     "interactions": "Press",
                     "processors": "",
                     "groups": ";Gamepad",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d4928e34-c18e-41a2-a4bf-fb0c685e4eb0",
+                    "path": "<HID::DragonRise Inc.   Generic   USB  Joystick  >/button10",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
                     "action": "Pause",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -605,6 +671,17 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
+                    "action": "Submit",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "74db01ef-beac-4493-85b2-cfb964d09599",
+                    "path": "<Joystick>/trigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Joystick",
                     "action": "Submit",
                     "isComposite": false,
                     "isPartOfComposite": false

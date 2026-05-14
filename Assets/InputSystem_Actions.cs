@@ -102,15 +102,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""West"",
-                    ""type"": ""Button"",
-                    ""id"": ""6c2ab1b8-8984-453a-af3d-a3c78ae1679a"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""South"",
                     ""type"": ""Button"",
                     ""id"": ""852140f2-7766-474d-8707-702459ba45f3"",
@@ -120,9 +111,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""East"",
+                    ""name"": ""West"",
                     ""type"": ""Button"",
-                    ""id"": ""9b8c0152-19e3-4b37-a2cd-547f8f2031d7"",
+                    ""id"": ""6c2ab1b8-8984-453a-af3d-a3c78ae1679a"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -132,6 +123,15 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""name"": ""North"",
                     ""type"": ""Button"",
                     ""id"": ""85cf1ce2-ad55-470e-b572-7dd18ef82e58"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""East"",
+                    ""type"": ""Button"",
+                    ""id"": ""9b8c0152-19e3-4b37-a2cd-547f8f2031d7"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -155,6 +155,17 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Gamepad"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0b8d3198-9a32-411c-923e-7349581f252c"",
+                    ""path"": ""<Joystick>/stick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -216,6 +227,17 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""8fdea805-56a1-42db-b23a-f6123b92c674"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""143bb1cd-cc10-4eca-a2f0-a3664166fe91"",
                     ""path"": ""<Gamepad>/buttonWest"",
                     ""interactions"": """",
@@ -238,6 +260,17 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""52638c1b-a0d3-43dc-926b-a21396f2a4f6"",
+                    ""path"": ""<HID::DragonRise Inc.   Generic   USB  Joystick  >/button2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""West"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""b3f66d0b-7751-423f-908b-a11c5bd95930"",
                     ""path"": ""<Gamepad>/buttonSouth"",
                     ""interactions"": """",
@@ -251,6 +284,17 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""8e317e5b-4775-46e5-bfd9-33b412aa5e71"",
                     ""path"": ""<Keyboard>/z"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""South"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""935b5555-e037-4cae-a3a8-b2dbcd953447"",
+                    ""path"": ""<HID::DragonRise Inc.   Generic   USB  Joystick  >/trigger"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -282,6 +326,17 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""b5fb197a-ae14-4be3-b4d1-219214a6b5e9"",
+                    ""path"": ""<HID::DragonRise Inc.   Generic   USB  Joystick  >/button3"",
+                    ""interactions"": ""Press(behavior=2)"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""North"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""0bf8bc97-a1a8-4a3c-ba39-513f6f7ed900"",
                     ""path"": ""<Keyboard>/c"",
                     ""interactions"": ""Press(behavior=2)"",
@@ -298,6 +353,17 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""interactions"": ""Press"",
                     ""processors"": """",
                     ""groups"": "";Gamepad"",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d4928e34-c18e-41a2-a4bf-fb0c685e4eb0"",
+                    ""path"": ""<HID::DragonRise Inc.   Generic   USB  Joystick  >/button10"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
                     ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -697,6 +763,17 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""74db01ef-beac-4493-85b2-cfb964d09599"",
+                    ""path"": ""<Joystick>/trigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Joystick"",
+                    ""action"": ""Submit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""82627dcc-3b13-4ba9-841d-e4b746d6553e"",
                     ""path"": ""*/{Cancel}"",
                     ""interactions"": """",
@@ -918,10 +995,10 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
-        m_Player_West = m_Player.FindAction("West", throwIfNotFound: true);
         m_Player_South = m_Player.FindAction("South", throwIfNotFound: true);
-        m_Player_East = m_Player.FindAction("East", throwIfNotFound: true);
+        m_Player_West = m_Player.FindAction("West", throwIfNotFound: true);
         m_Player_North = m_Player.FindAction("North", throwIfNotFound: true);
+        m_Player_East = m_Player.FindAction("East", throwIfNotFound: true);
         m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
@@ -1018,10 +1095,10 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Player;
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_Move;
-    private readonly InputAction m_Player_West;
     private readonly InputAction m_Player_South;
-    private readonly InputAction m_Player_East;
+    private readonly InputAction m_Player_West;
     private readonly InputAction m_Player_North;
+    private readonly InputAction m_Player_East;
     private readonly InputAction m_Player_Pause;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
@@ -1039,21 +1116,21 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @Move => m_Wrapper.m_Player_Move;
         /// <summary>
-        /// Provides access to the underlying input action "Player/West".
-        /// </summary>
-        public InputAction @West => m_Wrapper.m_Player_West;
-        /// <summary>
         /// Provides access to the underlying input action "Player/South".
         /// </summary>
         public InputAction @South => m_Wrapper.m_Player_South;
         /// <summary>
-        /// Provides access to the underlying input action "Player/East".
+        /// Provides access to the underlying input action "Player/West".
         /// </summary>
-        public InputAction @East => m_Wrapper.m_Player_East;
+        public InputAction @West => m_Wrapper.m_Player_West;
         /// <summary>
         /// Provides access to the underlying input action "Player/North".
         /// </summary>
         public InputAction @North => m_Wrapper.m_Player_North;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/East".
+        /// </summary>
+        public InputAction @East => m_Wrapper.m_Player_East;
         /// <summary>
         /// Provides access to the underlying input action "Player/Pause".
         /// </summary>
@@ -1087,18 +1164,18 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Move.started += instance.OnMove;
             @Move.performed += instance.OnMove;
             @Move.canceled += instance.OnMove;
-            @West.started += instance.OnWest;
-            @West.performed += instance.OnWest;
-            @West.canceled += instance.OnWest;
             @South.started += instance.OnSouth;
             @South.performed += instance.OnSouth;
             @South.canceled += instance.OnSouth;
-            @East.started += instance.OnEast;
-            @East.performed += instance.OnEast;
-            @East.canceled += instance.OnEast;
+            @West.started += instance.OnWest;
+            @West.performed += instance.OnWest;
+            @West.canceled += instance.OnWest;
             @North.started += instance.OnNorth;
             @North.performed += instance.OnNorth;
             @North.canceled += instance.OnNorth;
+            @East.started += instance.OnEast;
+            @East.performed += instance.OnEast;
+            @East.canceled += instance.OnEast;
             @Pause.started += instance.OnPause;
             @Pause.performed += instance.OnPause;
             @Pause.canceled += instance.OnPause;
@@ -1116,18 +1193,18 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Move.started -= instance.OnMove;
             @Move.performed -= instance.OnMove;
             @Move.canceled -= instance.OnMove;
-            @West.started -= instance.OnWest;
-            @West.performed -= instance.OnWest;
-            @West.canceled -= instance.OnWest;
             @South.started -= instance.OnSouth;
             @South.performed -= instance.OnSouth;
             @South.canceled -= instance.OnSouth;
-            @East.started -= instance.OnEast;
-            @East.performed -= instance.OnEast;
-            @East.canceled -= instance.OnEast;
+            @West.started -= instance.OnWest;
+            @West.performed -= instance.OnWest;
+            @West.canceled -= instance.OnWest;
             @North.started -= instance.OnNorth;
             @North.performed -= instance.OnNorth;
             @North.canceled -= instance.OnNorth;
+            @East.started -= instance.OnEast;
+            @East.performed -= instance.OnEast;
+            @East.canceled -= instance.OnEast;
             @Pause.started -= instance.OnPause;
             @Pause.performed -= instance.OnPause;
             @Pause.canceled -= instance.OnPause;
@@ -1450,13 +1527,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnMove(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "West" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnWest(InputAction.CallbackContext context);
-        /// <summary>
         /// Method invoked when associated input action "South" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
@@ -1464,12 +1534,12 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnSouth(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "East" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "West" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnEast(InputAction.CallbackContext context);
+        void OnWest(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "North" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
@@ -1477,6 +1547,13 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnNorth(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "East" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnEast(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "Pause" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
