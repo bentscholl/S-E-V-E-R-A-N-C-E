@@ -124,6 +124,7 @@ public class PauseManager : MonoBehaviour
 
     public void Reset()
     {
+        Time.timeScale = 1;
         Transition.Instance.FadeToScene(GameManager.Level);
     }
 
