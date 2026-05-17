@@ -32,6 +32,16 @@ public class Menu : MonoBehaviour
             Floors[i].interactable = true;
             Floors[i].GetComponent<Image>().color = Color.white;
         }
+
+        NPC[] NPCs = FindObjectsByType<NPC>(FindObjectsSortMode.InstanceID);
+
+        foreach (NPC npc in NPCs)
+        {
+            if (npc.IsDead)
+            {
+                Destroy(npc.gameObject);
+            }
+        }
     }
     private void Start()
     {

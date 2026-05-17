@@ -18,7 +18,7 @@ public class Combover : Player
     BoxCollider BoxCollider;
 
     bool panning;
-    Camera Camera;
+    public Camera ArrowCamera;
 
     AudioClip VentFX;
     AudioClip Woosh;
@@ -30,6 +30,7 @@ public class Combover : Player
         MovementSpeed = 3f;
         Sprite = transform.GetChild(1).gameObject;
         Camera = GetComponentInChildren<Camera>();
+        ArrowCamera = Camera.transform.GetChild(0).GetComponent<Camera>();
         BoxCollider = GetComponent<BoxCollider>();
         VentFX = Resources.Load<AudioClip>("SFX/Vent");
         Woosh = Resources.Load<AudioClip>("Woosh");

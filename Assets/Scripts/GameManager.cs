@@ -37,12 +37,27 @@ public class GameManager : MonoBehaviour
     public static int Level;
     void Awake()
     {
+        NPC[] NPCs = FindObjectsByType<NPC>(FindObjectsSortMode.InstanceID);
+
+        StartingTotal = 0;
+
+        foreach (NPC npc in NPCs)
+        {
+            if (npc.IsDead)
+            {
+                Destroy(npc.gameObject);
+            }
+            else
+            {
+                StartingTotal++;
+            }
+        }
+
         StopAllCoroutines();
         Level = SceneManager.GetActiveScene().buildIndex;
         Total = GameObject.Find("Total").GetComponentInChildren<TextMeshProUGUI>();
         Kills = GameObject.Find("Kills").GetComponentInChildren<TextMeshProUGUI>();
         Lost = GameObject.Find("Lost").GetComponentInChildren<TextMeshProUGUI>();
-        StartingTotal = FindObjectsByType<NPC>(FindObjectsSortMode.InstanceID).Length;
 
         EndPanel = GameObject.Find("EndPanel");
         EndAnimator = EndPanel.GetComponent<Animator>();
@@ -100,7 +115,20 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-
+        //Arcade Hotkeys
+        if(Input.GetKeyDown(KeyCode.Backspace))
+        {
+            Rect temp = Meathead.Instance.Camera.rect;
+            Meathead.Instance.Camera.rect = Combover.Instance.Camera.rect;
+            Combover.Instance.Camera.rect = temp;
+            Combover.Instance.ArrowCamera.rect = temp;
+        }
+        if(Input.GetKeyDown(KeyCode.Backslash))
+        {
+            Destroy(PlayerController.ComboverController.gameObject);
+            Destroy(PlayerController.MeatheadController.gameObject);
+            Transition.Instance.FadeToScene(1);
+        }
     }
 
     void FixedUpdate()
@@ -169,20 +197,17 @@ public class GameManager : MonoBehaviour
             MoneyCounter.color = Color.red;
             prefix = "-$";
         }
-        for(int i = 0; i <= 150; i++)
+        else
         {
-            MoneyCounter.text = prefix + Mathf.Abs((int)Mathf.Lerp(0,Money,i/150f));
+            MoneyCounter.color = Color.green;
+        }
+        for (int i = 0; i <= 150; i++)
+        {
+            MoneyCounter.text = prefix + Mathf.Abs((int)Mathf.Lerp(0, Money, i / 150f));
             yield return new WaitForFixedUpdate();
         }
         Time.timeScale = 1;
         yield return new WaitForSeconds(3);
-
-        NPC[] RemainingNPCs = FindObjectsByType<NPC>(FindObjectsSortMode.InstanceID);
-
-        foreach (NPC npc in RemainingNPCs)
-        {
-            Destroy(npc.gameObject);
-        }
 
         if(Money < 0 )
         {

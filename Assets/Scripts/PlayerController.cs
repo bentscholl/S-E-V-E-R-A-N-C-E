@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.UI;
 using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
@@ -17,6 +18,7 @@ public class PlayerController : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         GameManager.AudioSource.PlayOneShot(GameManager.PlayerJoin);
         input = GetComponent<PlayerInput>();
+        input.uiInputModule = FindFirstObjectByType<InputSystemUIInputModule>();
         if (input.playerIndex == 0)
         {
             Image ComboverSprite = GameObject.Find("ComboverMenu").GetComponent<Image>();

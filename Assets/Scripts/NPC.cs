@@ -122,7 +122,7 @@ public class NPC : MonoBehaviour
                 MHSpriteRenderer.enabled = true;
             }
 
-            if(Behavior != FiniteState.Escape && Behavior != FiniteState.Dead)
+            if(Behavior != FiniteState.Escape && !IsDead)
                 SusIndicator.SetFloat("_Fill", Suspicion / 100f);
             else
                 SusIndicator.SetFloat("_Fill", 0);
@@ -146,12 +146,11 @@ public class NPC : MonoBehaviour
 
                 if (Suspicion >= 100 && Behavior != FiniteState.Escape)
                 {
-                    Dismiss();
+                    FollowedPlayer = null;
                     SusIndicator.SetFloat("_Fill", 0);
                     MyRoom.Residents--;
                     Invoke("SetDespawnable", 1);
                     Agent.destination = Escape;
-                    print(Escape);
                     Behavior = FiniteState.Escape;
                     SuspiciousBrow.SetActive(false);
                     ScaredBrow.SetActive(true);
@@ -317,9 +316,8 @@ public class NPC : MonoBehaviour
     {
         FollowedPlayer = null;
         Boredom = 0;
-        Vector3 location = MyRoom.transform.position + new Vector3(Random.Range(-MyRoom.XVariation, MyRoom.XVariation), 0, Random.Range(-MyRoom.ZVariation, MyRoom.ZVariation + 1));
-        Agent.SetDestination(location);
-        Behavior = FiniteState.Travel;
+        Agent.SetDestination(transform.position);
+        Behavior = FiniteState.Idle;
     }
 
     public void Stab()

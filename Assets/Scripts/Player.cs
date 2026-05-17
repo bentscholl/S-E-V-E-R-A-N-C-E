@@ -45,10 +45,12 @@ public abstract class Player : MonoBehaviour
 
     public LayerMask RaycastMask;
 
+    public Camera Camera;
+
     // Start is called before the first frame update
     protected void Start()
     {
-        input = GetComponent<PlayerInput>();
+        input = GetComponentInParent<PlayerInput>();
         MovementVector = Vector2.zero;
         SpriteTransform = GetComponentInChildren<SpriteRenderer>().transform;
         Animator = GetComponent<Animator>();
@@ -61,6 +63,7 @@ public abstract class Player : MonoBehaviour
         AudioSource.outputAudioMixerGroup = Resources.Load<AudioMixer>("AudioMixer").FindMatchingGroups("Master")[0];
         StabFX = Resources.Load<AudioClip>("SFX/Knife");
         PoofFX = Resources.Load<AudioClip>("SFX/Poof");
+        Camera = GetComponentInChildren<Camera>();
         NewLevel();
     }
 
@@ -195,6 +198,7 @@ public abstract class Player : MonoBehaviour
                     {
                         npc.Follow(transform);
                         FollowingNPC = npc;
+                        NPCHighlight.SetColor("_Color", Color.green);
                     }
                 }
             }
